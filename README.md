@@ -1,8 +1,8 @@
-# Asilserp — tasarım çalışması 05
+# Asilserp — tasarım çalışması 06
 
 Asilserp SEO platformu için bağımlılıksız HTML/CSS/JavaScript tasarım prototipi. İki sayfa vardır:
 
-- `index.html`: belirgin biçimde küçülen ve renkli kenarı hareket eden header, açılış ekranı, etkileşimli platform paneli, 21 araç kartı ve kayan beş telefon ekranı.
+- `index.html`: daha küçük yüzen header, değişen açılış sloganı, SEO terimleri akan Matrix arka planı, müşteri markaları, etkileşimli platform paneli, 21 araç kartı, kayan beş telefon ekranı ve tam genişlikte footer.
 - `trafigim-dusuyor/index.html`: dokuz adımlı trafik kaybı rehberi, kayıtlı kontrol listesi, bölüm bağlantıları ve yedi soru-cevap.
 
 İki sayfada da Asilserp markasına uyarlanmış SVG devre/çip yükleme ekranı bulunur.
@@ -20,19 +20,27 @@ Paket kurulumu ve derleme gerekmez. Logo ve Manrope fontları HTML içine gömü
 
 ## Davranışlar
 
-Header 56 piksel kaydırmadan sonra küçülür; üste dönünce eski boyutuna gelir. Masaüstünde yüksekliği 72'den 54 piksele, genişliği %80'e iner. 981–1180 piksel aralığında dar görünüm %88 genişliktedir. Mobilde de genişlik %88 olur; 540 piksel ve altında yüksekliği 50 pikseldir. Kenardaki turuncu/lacivert conic-gradient hareketi belirginleştirilmiştir. Mobil menü ve Escape ile kapatma çalışır. Dış kapsayıcının yüksekliği sabittir.
+Header 56 piksel kaydırmadan sonra küçülür; üste dönünce eski boyutuna gelir. Masaüstünde yüksekliği 72'den 50 piksele, genişliği %74'e iner. 981–1180 piksel aralığında ve mobilde dar görünüm %84 genişliktedir; 540 piksel ve altında yüksekliği 46 pikseldir. Dar durumdaki logo masaüstünde 118, mobilde 108 piksel genişliğindedir. Kenardaki turuncu/lacivert conic-gradient hareketi korunur. Mobil menü ve Escape ile kapatma çalışır. Dış kapsayıcının yüksekliği sabittir.
+
+Açılış başlığında **SEO’da** sabit kalır. Yanındaki beş ifade yazılıp silinerek değişir: “bir adım öne.”, “veriyle büyü.”, “fırsatı keşfet.”, “rekabette öne.” ve “fark yarat.” Erişilebilir başlık sabit tutulur; ekran okuyucu her karakter değişimini duyurmaz. Slogan hareketi genel durdurma, hareketi azaltma tercihi, gizli sekme ve ekran dışı durumda durur.
+
+Kullanıcının verdiği yeni Matrix CSS’i, raporun arkasında üç akışta 12 okunabilir SEO ifadesi gösterecek şekilde uyarlanmıştır. SEO analizi, anahtar kelime, organik trafik, sıra takibi ve site denetimi gibi ifadeler turuncu/lacivert tonlarda akar. Açık temadaki görünürlüğü artırılmıştır. Katman işaretçi olaylarını engellemez; hareket kontrolünde durur ve hareketi azaltma tercihinde gizlenir.
+
+Açılışın altındaki müşteri alanı kullanıcının birlikte çalıştığını bildirdiği dört markayı gösterir: **ShiftDelete.Net, MediaMarkt, Vestel ve Mis Amasya Tur**. MediaMarkt’ın spiral simgesi ile Vestel’in yazı logosu doğrulanmış Simple Icons dosyalarından gelir. MediaMarkt simgesinin yanında normal marka adı kullanılır. ShiftDelete.Net ve tek bir otobüs firması olan Mis Amasya Tur, güvenilir görsel dosyaları temin edilemediği için düz marka adıyla temsil edilir; bunlar hazırlanmış resmî logo gibi sunulmaz.
 
 Alan adı formu girdiyi doğrular ve açıkça etiketlenmiş örnek raporu açar. Platformun dört sekmesi, klavye okları/Home/End, 30/90 gün kontrolleri ve fırsat pencereleri çalışır. Metrik kartlarında küçük trend grafikleri bulunur; büyük grafikte fare ve klavyeyle nokta seçimi tarih/değer açıklamasını gösterir. Örnek teknik denetim kapsamı en fazla 100 sayfadır.
 
 Araç kataloğu 18 SEO ve 3 Ads kartından oluşur. Beş mevcut araç doğrulanmış Asilserp kapsamına dayanır; 16 önerilen araç **Yakında** etiketi taşır. Her kart klavyeyle erişilebilir bir ayrıntı penceresi açar. Mevcut araçlar panele ve uygun örnek görünüme yönlendirir; planlanan araçlar çalışıyormuş gibi analiz başlatmaz. Kart başına dönen turuncu/lacivert conic-gradient kenar ve hafif arka ışık kullanılır; yazılar sabit kalır. Animasyonlar kart ekran dışındayken, genel hareket kontrolüyle ve hareketi azaltma tercihinde durur.
 
-SVG devre/çip yükleme ekranı, gerçek sayfa yüklenmesi ve font hazırlığını bekler. En az 550 milisaniye görünür; 1600 milisaniyelik yedek kapanış ve 200 milisaniyelik çıkış geçişi vardır. **Sayfaya geç** ve Escape ile atlanabilir. Kapanışta arka içeriğin `inert` durumu ve kaydırma kilidi temizlenir. JavaScript kapalıysa yükleyici görünmez ve sayfa içeriği erişilebilir kalır. Gösterilen yükleme durumu bir SEO analizi yürütüldüğü anlamına gelmez.
+SVG devre/çip yükleme ekranı, gerçek sayfa yüklenmesi ve font hazırlığını bekler. En az 550 milisaniye görünür; 1600 milisaniyelik yedek kapanış ve 200 milisaniyelik çıkış geçişi vardır. **Sayfaya geç** ve Escape ile atlanabilir. Kapanışta arka içeriğin, footer dahil, önceki `inert` durumu ve kaydırma kilidi geri yüklenir. JavaScript kapalıysa yükleyici görünmez ve sayfa içeriği erişilebilir kalır. Gösterilen yükleme durumu bir SEO analizi yürütüldüğü anlamına gelmez.
 
 Telefon ekranları HTML/CSS ve SVG ile çizilmiştir. Yatay kaydırma, dokunma, fareyle sürükleme, ok düğmeleri, klavye ve durdurma düğmesi desteklenir. Otomatik ilerleme yalnızca bölüm görünürken çalışır; kullanıcı etkileşiminde, odakta, fare üzerinde, gizli sekmede ve hareketi azaltma tercihinde durur. Ekranlar mobil web tasarım önerisidir; yayımlanmış bir mobil uygulama değildir.
 
 Trafik kaybı rehberindeki kontrol listesi `asilserp-traffic-guide-v1` anahtarıyla yalnızca bu tarayıcıda saklanır; hesap senkronizasyonu yoktur. İşaretleri temizleme, ilerleme yüzdesi ve etkin bölüm göstergesi çalışır. Depolama kapalıysa sayfa içindeki işaretleme çalışmaya devam eder.
 
-Kullanıcının sağladığı Uiverse tarzı CSS örnekleri, turuncu/lacivert ışık çerçevesi ve hafif Matrix animasyonu olarak uyarlanmıştır. Ana sayfadaki hareket kontrolü ve işletim sisteminin hareketi azaltma tercihi desteklenir.
+Kullanıcının sağladığı Uiverse tarzı CSS örnekleri, turuncu/lacivert ışık çerçevesi ve okunabilir SEO terimleri içeren Matrix akışı olarak uyarlanmıştır. Ana sayfadaki hareket kontrolü ve işletim sisteminin hareketi azaltma tercihi desteklenir.
+
+Tam genişlikte lacivert footer; başlangıç çağrısı, araç/platform/rehber bağlantıları, fiyat ve panel bağlantıları, örnek rapor, 2026 telif satırı ve yukarı dönme bağlantısı içerir. Araç düğmeleri mevcut katalog ayrıntı pencerelerini açar; analiz düğmesi alan adı kutusuna odaklanır. Doğrulanmamış destek adresi, sosyal hesap veya hukuki sayfa bağlantısı eklenmemiştir. Footer’ın arka planı üç temada da lacivert kalır ve sabit görünüm seçicisi için alt boşluk bırakılır.
 
 ## İçerik ve kaynaklar
 
@@ -42,13 +50,14 @@ Kullanıcının sağladığı Uiverse tarzı CSS örnekleri, turuncu/lacivert ı
 - Header davranışı kullanıcının `agent-magicui.vercel.app` referansı ve kaydırmada küçülme açıklamasına dayanır.
 - Kullanıcının verdiği [Next.js dashboard konu sayfası](https://github.com/topics/nextjs-dashboard) incelenmiştir. [TailAdmin](https://github.com/TailAdmin/free-nextjs-admin-dashboard) metrik kartları, büyüme etiketleri ve boşluk düzeni; [Kiranism/Shadcn Dashboard](https://github.com/Kiranism/next-shadcn-dashboard-starter) sade çerçeveler, koyu/açık görünüm ve grafik/tablo hiyerarşisi; [NextAdmin](https://github.com/NextAdminHQ/nextjs-admin-dashboard) dönem seçimi ve grafik değer açıklamaları için görsel ilhamdır. İlk ikisinin MIT lisansı doğrulanmıştır; NextAdmin'in lisans dosyası API üzerinden bulunamamıştır. Bu projelerden kod alınmamış; mevcut prototipe bağımlılık veya Next.js geçişi eklenmemiştir.
 - Kullanılan logo mevcut `https://asilserp.com/asilserp-logo.png` adresinden alınmıştır: `assets/asilserp-logo-official.png`. Önceki fotoğraf uyarlaması `assets/asilserp-logo.png` olarak korunur, artık gösterilmez.
+- Müşteri markalarının dosyaları ve kaynak kayıtları `assets/clients/` altındadır. `sources.json`, MediaMarkt/Vestel Simple Icons kaynaklarını, dosya özetlerini ve diğer iki markadaki metin kullanımının nedenini kaydeder. Birlikte çalışma bilgisi kullanıcının beyanına dayanır.
 - Fontlar: Manrope Variable, Latin ve Latin-ext. Font dosyaları ve SIL Open Font License metni `assets/fonts/` altındadır. Türkçe karakterler desteklenir.
 
 ## Kapsam ve doğrulama
 
-Bütün panel ve telefon verileri örnektir. Alan adları analiz servisine gönderilmez. Gerçek API bağlantısı, kullanıcı oturumu ve canlı raporlama bu tasarım çalışmasına eklenmemiştir. Rehber otomatik teşhis veya sıralama garantisi sunmaz. Ana sayfanın footer tasarımı sonraki aşamadır.
+Bütün panel ve telefon verileri örnektir. Alan adları analiz servisine gönderilmez. Gerçek API bağlantısı, kullanıcı oturumu ve canlı raporlama bu tasarım çalışmasına eklenmemiştir. Rehber otomatik teşhis veya sıralama garantisi sunmaz. Tasarım; footer dahil kullanıcı geri bildirimleriyle geliştirilir.
 
-Chromium/Playwright kontrol kapsamı: iki sayfada 320–1440 piksel arası görünüm, daralan header, tema seçimi, form, sekmeler, grafik etkileşimi, araç kartları ve ayrıntı pencereleri, yükleyicinin kapanması ve atlanması, telefon kaydırıcısı, kontrol listesi ve soru-cevaplar. Ekran görüntüleri iki kat piksel yoğunluğunda `/workspace/artifacts` altında üretilir. Son kontrol sonuçları ilgili çalıştırmanın çıktısından değerlendirilmelidir.
+Chromium/Playwright kontrol kapsamı: iki sayfada 320–1440 piksel arası görünüm, daralan header, değişen slogan ve hareket kontrolleri, müşteri markaları, okunabilir Matrix akışı, footer bağlantıları, tema seçimi, form, sekmeler, grafik etkileşimi, araç kartları ve ayrıntı pencereleri, yükleyicinin kapanması ve atlanması, telefon kaydırıcısı, kontrol listesi ve soru-cevaplar. Ekran görüntüleri iki kat piksel yoğunluğunda `/workspace/artifacts` altında üretilir. Son kontrol sonuçları ilgili çalıştırmanın çıktısından değerlendirilmelidir.
 
 ## Paylaşım ve önizleme
 

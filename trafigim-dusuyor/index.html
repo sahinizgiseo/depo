@@ -566,6 +566,42 @@ html[data-loading="true"] body { overflow: hidden; }
   .site-loader .trace-flow { animation: none; stroke-dashoffset: 170; filter: none; }
 }
 
+/* The SEO prefix remains fixed while only the second line is typed. */
+.hero h1 .slogan-fixed{display:block}
+.hero h1 .slogan-line{display:block;position:relative;white-space:nowrap;min-height:1.2em;padding-right:8px}
+.slogan-caret{display:inline-block;width:3px;height:.8em;vertical-align:-.04em;margin-left:7px;background:var(--accent-text);border-radius:2px;animation:slogan-caret-blink .9s steps(1,end) infinite}
+@keyframes slogan-caret-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+[data-motion="paused"] .slogan-caret{display:none}
+.client-proof{display:flex;gap:38px;align-items:center;border-top:1px solid var(--line);padding:30px 0 33px;margin:12px 0 20px;scroll-margin-top:95px}
+.client-proof-copy{flex:0 0 205px}
+.client-proof-kicker{font-size:9px;letter-spacing:1.8px;font-weight:650;color:var(--accent-text);margin:0 0 9px}
+.client-proof h2{font-size:17px;font-weight:650;line-height:1.5;letter-spacing:-.45px;margin:0}
+.client-logo-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:center;padding:0;margin:0;list-style:none;width:100%;min-width:0}
+.client-logo{display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;height:70px;border:1px solid #dfe7ef;background:#fff;border-radius:12px;padding:15px 12px;box-shadow:0 5px 16px #001c3010;transition:border-color .2s,box-shadow .2s}
+.client-logo:hover{border-color:#ff6b1870;box-shadow:0 6px 24px #06376816}
+.client-logo img{display:block;max-width:100%;width:auto;max-height:36px;object-fit:contain}
+.client-logo .client-vestel{width:130px;height:32px;object-fit:cover}
+.client-logo .client-symbol{width:29px;height:29px;flex:0 0 29px}
+.client-brand-label{font-size:18px;line-height:1.15;letter-spacing:-.8px;font-weight:800;color:#172f45;white-space:nowrap}
+.client-brand-label.mediamarkt{font-size:19px;color:#df0000;letter-spacing:-1px}
+.client-brand-label.shiftdelete{font-size:18px;letter-spacing:-.9px}
+.client-brand-label.amasyatur{font-size:16px;letter-spacing:-.4px;text-align:center;white-space:normal}
+.client-logo .client-logo-wide{width:145px;height:37px;object-fit:contain}
+/* A more compact floating menu after scrolling. */
+.header-hover-zone.is-compact .header{width:74%;height:50px;gap:12px;padding-inline:14px}
+.header-hover-zone.is-compact .brand .brand-logo{width:118px;height:39px}
+.header-hover-zone.is-compact .header .nav{gap:16px}
+.header-hover-zone.is-compact .header .header-cta{padding:10px 13px}
+.header-hover-zone.is-compact .header-search{width:26px;height:30px}
+.header-hover-zone.is-compact .header-search svg{width:17px;height:17px}
+@media(min-width:981px) and (max-width:1180px){.header-hover-zone.is-compact .header{width:84%;gap:10px;padding-inline:12px}.header-hover-zone.is-compact .header .nav{gap:12px}.header-hover-zone.is-compact .header .header-cta{padding:10px 12px;gap:8px}}
+@media(max-width:1100px){.client-proof{gap:22px}.client-proof-copy{flex-basis:170px}.client-logo-list{gap:10px}.client-logo{padding:14px 9px}.client-brand-label.mediamarkt{font-size:16px}.client-brand-label.shiftdelete{font-size:16px}.client-logo .client-symbol{width:25px;height:25px;flex-basis:25px}}
+@media(max-width:980px){.header-hover-zone.is-compact .header{width:84%;height:50px}.header-hover-zone.is-compact .header .nav{top:61px}.client-proof{display:block;padding:26px 0;margin-top:20px}.client-proof-copy{text-align:center;margin-bottom:21px}.client-proof h2{font-size:16px}.client-logo{height:67px}}
+@media(max-width:620px){.client-logo-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:420px;margin-inline:auto}.client-logo{height:65px;padding:14px}.client-brand-label.mediamarkt{font-size:18px}.client-brand-label.shiftdelete{font-size:18px}.client-proof{padding-top:28px;padding-bottom:28px;margin-bottom:7px}}
+@media(max-width:540px){.header-hover-zone.is-compact .header{width:84%;height:46px;padding-inline:10px;gap:8px}.header-hover-zone.is-compact .brand .brand-logo{width:108px;height:36px}.header-hover-zone.is-compact .header-actions{gap:6px}.header-hover-zone.is-compact .header .nav{top:56px;gap:10px 15px}.slogan-caret{width:2px;margin-left:4px}}
+@media(max-width:360px){.client-logo{padding:12px 9px}.client-brand-label.mediamarkt{font-size:15px}.client-brand-label.shiftdelete{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.slogan-caret{display:none}.client-logo{transition:none}}
+
 </style></head><body>
 <div class="site-loader" id="site-loader" role="status" aria-label="Asilserp yükleniyor" hidden>
   <div class="site-loader__content">

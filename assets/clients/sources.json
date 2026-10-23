@@ -1,0 +1,51 @@
+[
+  {
+    "brand": "MediaMarkt",
+    "status": "verified_logo",
+    "asset_url": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/mediamarkt.svg",
+    "provenance": {
+      "title": "MediaMarkt",
+      "hex": "DF0000",
+      "source": "https://www.mediamarkt.de"
+    },
+    "type": "image/svg+xml",
+    "note": "Original sanitized/checked Simple Icons SVG geometry. MediaMarkt asset is its authentic spiral mark, without wordmark; add an ordinary visible brand-name label if needed. Vestel SVG contains full wordmark within square viewBox, with whitespace.",
+    "relative_file": "assets/clients/mediamarkt.svg",
+    "brand_color": "#DF0000",
+    "sha256": "df0dd232402652b1179f4a287ad52599613b9e007bfc7366b6c1ef1d8497d07d",
+    "relationship_source": "user-provided client relationship"
+  },
+  {
+    "brand": "Vestel",
+    "status": "verified_logo",
+    "asset_url": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vestel.svg",
+    "provenance": {
+      "title": "Vestel",
+      "hex": "DD052B",
+      "source": "https://commons.wikimedia.org/wiki/File:Vestel_logo.svg"
+    },
+    "type": "image/svg+xml",
+    "note": "Original sanitized/checked Simple Icons SVG geometry. MediaMarkt asset is its authentic spiral mark, without wordmark; add an ordinary visible brand-name label if needed. Vestel SVG contains full wordmark within square viewBox, with whitespace.",
+    "relative_file": "assets/clients/vestel.svg",
+    "brand_color": "#DD052B",
+    "sha256": "f2b8132e07588da3d2223564525c942307c4902fc80475f8e7ba16c7c57366dd",
+    "relationship_source": "user-provided client relationship"
+  },
+  {
+    "brand": "ShiftDelete.Net",
+    "status": "text_fallback_required",
+    "website_url": "https://shiftdelete.net/",
+    "known_official_asset_url": "https://shiftdelete.net/wp-content/themes/shiftdelete/assets/img/logo-2x.png",
+    "known_asset_provenance": "Public captured official response headers in https://github.com/pluto/how-many-sxg-sites/blob/4ccda80205d51e9f0c5b4ac850e2d2f084fd8083/results/https___shiftdelete_net identify this logo preload. Asset itself was not fetched or visually verified.",
+    "reason": "Official website HTTPS CONNECT denied403; no independently verified public cached graphic found. Use ordinary brand-name text, not invented logo.",
+    "relationship_source": "user-provided client relationship"
+  },
+  {
+    "brand": "Mis Amasya Tur",
+    "status": "text_fallback_required",
+    "website_url": "https://www.misamasyatur.com.tr/",
+    "reference_operator_url": "https://www.obilet.com/otobus-firmalari/mis-amasya-tur",
+    "reason": "Official and booking-provider HTTPS CONNECT requests denied403; no independently verified public cached graphic found. This is a single coach-company brand, not MİS dairy plus AmasyaTur. Use ordinary text, not invented logo.",
+    "relationship_source": "user-provided client relationship"
+  }
+]

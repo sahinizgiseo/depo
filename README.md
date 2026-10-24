@@ -1,11 +1,12 @@
-# Asilserp — tasarım çalışması 07
+# Asilserp — tasarım çalışması 08
 
-Asilserp SEO platformu için bağımlılıksız HTML/CSS/JavaScript tasarım prototipi. İki sayfa vardır:
+Asilserp SEO platformu için bağımlılıksız HTML/CSS/JavaScript tasarım prototipi. Üç sayfa vardır:
 
-- `index.html`: daha küçük yüzen header, değişen açılış sloganı, SEO terimleri akan Matrix arka planı, müşteri markaları, hareketli renk çerçeveli platform paneli, 21 araç kartı, kesintisiz kayan beş telefon ekranı ve tam genişlikte footer.
+- `index.html`: yüzen header, değişen slogan, SEO terimleri akan Matrix, müşteri markaları, kullanım senaryoları, üç adımlı süreç, etkileşimli platform paneli, 21 araç kartı, kesintisiz telefon şeridi, örnek çalışmalar/yorumlar, paket önizlemesi, sekiz soruluk SSS ve footer.
 - `trafigim-dusuyor/index.html`: dokuz adımlı trafik kaybı rehberi, kayıtlı kontrol listesi, bölüm bağlantıları ve yedi soru-cevap.
+- `fiyatlar/index.html`: üç paket, kapasite karşılaştırıcısı, özellik/limit tablosu, ortak araç kapsamı ve altı soru-cevap içeren yeniden tasarlanmış fiyatlar sayfası.
 
-İki sayfada da Asilserp markasına uyarlanmış SVG devre/çip yükleme ekranı bulunur.
+Üç sayfada da ortak marka renkleri, tema seçimi ve Asilserp’e uyarlanmış SVG devre/çip yükleme ekranı bulunur.
 
 ## Çalıştırma
 
@@ -16,7 +17,7 @@ cd /workspace/depo
 python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-Paket kurulumu ve derleme gerekmez. Logo ve Manrope fontları HTML içine gömülüdür; çalışma sırasında harici font veya CDN isteği yapılmaz. İki sayfa da koyu, açık ve lacivert görünümleri destekler. Seçim tarayıcıda hatırlanır.
+Paket kurulumu ve derleme gerekmez. Logo ve Manrope fontları HTML içine gömülüdür; çalışma sırasında harici font veya CDN isteği yapılmaz. Üç sayfa da koyu, açık ve lacivert görünümleri destekler. Seçim tarayıcıda hatırlanır.
 
 ## Davranışlar
 
@@ -32,7 +33,7 @@ Ana sayfadaki panel ve telefon önizlemelerinde alan adı etiketi **Sizin siteni
 
 Büyük platform panelinin çevresinde 2 piksel kalınlığında dönen turuncu/lacivert çerçeve ve yumuşak arka ışık bulunur. Açılıştaki örnek rapor kartı da daha ince bir hareketli çerçeve kullanır. Kartlar ve yazılar döndürülmez; renk hareketi kenarlarda kalır. Genel durdurma ve hareketi azaltma tercihleri bu efektlerde de geçerlidir.
 
-Araç kataloğu 18 SEO ve 3 Ads kartından oluşur. Beş mevcut araç doğrulanmış Asilserp kapsamına dayanır; 16 önerilen araç **Yakında** etiketi taşır. Her kart klavyeyle erişilebilir bir ayrıntı penceresi açar. Mevcut araçlar panele ve uygun örnek görünüme yönlendirir; planlanan araçlar çalışıyormuş gibi analiz başlatmaz. Kart başına dönen turuncu/lacivert conic-gradient kenar ve hafif arka ışık kullanılır; yazılar sabit kalır. Animasyonlar kart ekran dışındayken, genel hareket kontrolüyle ve hareketi azaltma tercihinde durur.
+Araç kataloğu 18 SEO ve 3 Ads kartından oluşur. Yedi mevcut araç doğrulanmış Asilserp kapsamına dayanır; 14 önerilen araç **Yakında** etiketi taşır. Anahtar Kelime Aracı ve SERP Analizi, güncel fiyatlar kaynağında doğrulanan kapsama göre mevcut araç olarak gösterilir. Her kart klavyeyle erişilebilir bir ayrıntı penceresi açar. Mevcut araçlar panele ve uygun örnek görünüme yönlendirir; planlanan araçlar çalışıyormuş gibi analiz başlatmaz. Kart başına dönen turuncu/lacivert conic-gradient kenar ve hafif arka ışık kullanılır; yazılar sabit kalır. Animasyonlar kart ekran dışındayken, genel hareket kontrolüyle ve hareketi azaltma tercihinde durur.
 
 SVG devre/çip yükleme ekranı, gerçek sayfa yüklenmesi ve font hazırlığını bekler. En az 550 milisaniye görünür; 1600 milisaniyelik yedek kapanış ve 200 milisaniyelik çıkış geçişi vardır. **Sayfaya geç** ve Escape ile atlanabilir. Kapanışta arka içeriğin, footer dahil, önceki `inert` durumu ve kaydırma kilidi geri yüklenir. JavaScript kapalıysa yükleyici görünmez ve sayfa içeriği erişilebilir kalır. Gösterilen yükleme durumu bir SEO analizi yürütüldüğü anlamına gelmez.
 
@@ -46,10 +47,37 @@ Kullanıcının sağladığı Uiverse tarzı CSS örnekleri, turuncu/lacivert ı
 
 Tam genişlikte lacivert footer; başlangıç çağrısı, araç/platform/rehber bağlantıları, fiyat ve panel bağlantıları, örnek rapor, 2026 telif satırı ve yukarı dönme bağlantısı içerir. Araç düğmeleri mevcut katalog ayrıntı pencerelerini açar; analiz düğmesi alan adı kutusuna odaklanır. Doğrulanmamış destek adresi, sosyal hesap veya hukuki sayfa bağlantısı eklenmemiştir. Footer’ın arka planı üç temada da lacivert kalır ve sabit görünüm seçicisi için alt boşluk bırakılır.
 
+## Ana sayfadaki yeni bölümler
+
+- `#kullanim-senaryolari`: farklı kullanım ihtiyaçlarını üç sekmede açıklar. Eski, tekrarlayan üç platform fayda kartının yerini alır.
+- `#nasil-calisir`: alan adıyla başlama, raporları inceleme ve sonraki adımı belirleme sürecini üç adımda gösterir. Önceki kısa ilke şeridinin yerini alır; footer bağlantısından ulaşılır.
+- `#calisma-ornekleri`: üç örnek SEO çalışma senaryosu içerir. Gerçek müşterilere ait vaka sonucu veya doğrulanmış sayısal başarı verisi değildir.
+- `#yorumlar`: üç SEO odaklı örnek yorum gösterir. Her biri **Örnek yorum** olarak etiketlidir; gerçek müşteri markalarına veya kişilere atfedilmez. Gerçek yorum ve çalışma sonucu yayımlanacaksa kullanıcıdan sağlanan, doğrulanmış metinlerle değiştirilmelidir.
+- `#paketler`: gerçek başlangıç fiyatlarını ve kapasite farklarını gösteren üç kısa paket kartıdır. Ayrıntılı karşılaştırma için yerel fiyatlar sayfasına gider.
+- `#sss`: kategori filtreleriyle sekiz olgusal soru-cevap sunar.
+
+Üst menüde önceki “Nasıl çalışır?” düğmesi **Fiyatlar** bağlantısıyla değiştirilmiştir. Süreç bölümü ana sayfada ve footer bağlantısında korunur. Ana sayfa ve rehberdeki fiyat bağlantıları `fiyatlar/index.html` sayfasına yönelir.
+
+## Paketler ve fiyatlar
+
+Yeni fiyatlar sayfasının kaynak içeriği, bu turda yeniden okunan `https://asilserp.com/fiyatlar` adresidir. Fiyatlar aylık TL başlangıç fiyatlarıdır; vergi ve tahsilat koşulları hesap açılışında ayrıca netleştirilir.
+
+| Paket | Aylık başlangıç | Proje | Toplam kayıtlı hedef kelime | SEO araştırması / ay | AI ve içerik işlemi / ay |
+|---|---:|---:|---:|---:|---:|
+| SEO Başlangıç | ₺2.990 | 3 | 100 | 100 | 20 |
+| SEO Büyüme | ₺4.590 | 10 | 500 | 400 | 80 |
+| Ajans Pro | ₺9.290 | 30 | 1.500 | 1.200 | 250 |
+
+Kapasite karşılaştırıcısı proje, toplam hedef kelime ve aylık işlem ihtiyaçlarını paket üst sınırlarıyla karşılaştırır. Bir projeye en fazla 100 hedef kelime kaydedilebilir. Bu hesaplama hesap veya ödeme başlatmaz; gerçek ücretli kullanım ayrıca veri bütçesiyle sınırlanır. Araştırma/AI sayıları üst sınırdır: veri bütçesi dolarsa kullanılmamış işlem adedi olsa da yeni ücretli sorgu durur.
+
+Aylık SEO ve AI kotaları UTC takvim ayı başında yenilenir; kullanılmayan haklar devretmez. Proje/kayıt silmek veya paket değiştirmek o ayın tüketimini sıfırlamaz. Otomatik günlük sıralama takibi ve ayrı ekip girişleri henüz sunulmaz. Hesap açılışı ve paket değişiklikleri ekip tarafından yönetilir; fiyatlar sayfası ödeme almaz ve karttan ücret çekmez. Giriş bağlantıları mevcut Asilserp müşteri girişine gider.
+
+Ortak araçlar, kapasite tablosu ve altı SSS bu koşulları açıklamak için tasarlanmıştır. Canlı ChatGPT/Gemini ve AI kelime hacmi kapsamı şu anda ABD / İngilizce’dir; yeni AI ve içerik araçlarının gerçek ücretli verilerle doğrulaması sürmektedir. HTML site denetimi en fazla 100 sayfadır; otomatik günlük takip veya ayrı ekip hesabı vaadi eklenmemiştir.
+
 ## İçerik ve kaynaklar
 
 - Asilserp'in mevcut sitesi bu çalışma sırasında okunmuştur. Rehberdeki araç kapsamı alan adı analizi, organik sıralamalar, en iyi sayfalar ve HTML site denetimine dayanır. Denetim en fazla 100 sayfa; JavaScript çalıştırma, performans testi veya tam site taraması içermez.
-- Panel ve fiyat bağlantıları mevcut `https://asilserp.com/customer-login` ve `https://asilserp.com/fiyatlar` adreslerine gider.
+- Panel bağlantıları mevcut `https://asilserp.com/customer-login` adresine gider. Fiyatlar tasarımı `https://asilserp.com/fiyatlar` kaynak içeriğine dayanır; prototip içindeki fiyatlar gezinmesi yerel `fiyatlar/index.html` sayfasını açar.
 - `https://semust.com/trafigim-dusuyor` dokuz adımlı rehber yapısı için referanstır. Asilserp sürümünün metinleri ve görselleri özgün hazırlanmıştır; Semust'a özgü ürün özellikleri aktarılmamıştır.
 - Header davranışı kullanıcının `agent-magicui.vercel.app` referansı ve kaydırmada küçülme açıklamasına dayanır.
 - Kullanıcının verdiği [Next.js dashboard konu sayfası](https://github.com/topics/nextjs-dashboard) incelenmiştir. [TailAdmin](https://github.com/TailAdmin/free-nextjs-admin-dashboard) metrik kartları, büyüme etiketleri ve boşluk düzeni; [Kiranism/Shadcn Dashboard](https://github.com/Kiranism/next-shadcn-dashboard-starter) sade çerçeveler, koyu/açık görünüm ve grafik/tablo hiyerarşisi; [NextAdmin](https://github.com/NextAdminHQ/nextjs-admin-dashboard) dönem seçimi ve grafik değer açıklamaları için görsel ilhamdır. İlk ikisinin MIT lisansı doğrulanmıştır; NextAdmin'in lisans dosyası API üzerinden bulunamamıştır. Bu projelerden kod alınmamış; mevcut prototipe bağımlılık veya Next.js geçişi eklenmemiştir.
@@ -61,7 +89,7 @@ Tam genişlikte lacivert footer; başlangıç çağrısı, araç/platform/rehber
 
 Bütün panel ve telefon verileri örnektir. Alan adları analiz servisine gönderilmez. Gerçek API bağlantısı, kullanıcı oturumu ve canlı raporlama bu tasarım çalışmasına eklenmemiştir. Rehber otomatik teşhis veya sıralama garantisi sunmaz. Tasarım; footer dahil kullanıcı geri bildirimleriyle geliştirilir.
 
-Chromium/Playwright kontrol kapsamı: iki sayfada 320–1440 piksel arası görünüm, daralan header, değişen slogan ve hareket kontrolleri, müşteri markaları, okunabilir Matrix akışı, footer bağlantıları, tema seçimi, form, sekmeler, grafik etkileşimi, panel/rapor çerçeveleri, araç kartları ve ayrıntı pencereleri, yükleyicinin kapanması ve atlanması, kesintisiz telefon şeridi ve elle kontrol seçenekleri, kontrol listesi ve soru-cevaplar. Ekran görüntüleri iki kat piksel yoğunluğunda `/workspace/artifacts` altında üretilir. Son kontrol sonuçları ilgili çalıştırmanın çıktısından değerlendirilmelidir.
+Chromium/Playwright kontrol kapsamı: üç sayfada 320–1440 piksel arası görünüm, daralan header, değişen slogan ve hareket kontrolleri, müşteri markaları, okunabilir Matrix akışı, footer bağlantıları, tema seçimi, form, sekmeler, grafik etkileşimi, panel/rapor çerçeveleri, araç kartları ve ayrıntı pencereleri, yükleyicinin kapanması ve atlanması, kesintisiz telefon şeridi ve elle kontrol seçenekleri, kullanım senaryosu sekmeleri, örnek çalışma/yorum etiketleri, paket kartları, fiyatlar kapasite karşılaştırıcısı ve limit tablosu, kategori filtreli SSS, rehber kontrol listesi ve soru-cevaplar. Ekran görüntüleri iki kat piksel yoğunluğunda `/workspace/artifacts` altında üretilir. Son kontrol sonuçları ilgili çalıştırmanın çıktısından değerlendirilmelidir.
 
 ## Paylaşım ve önizleme
 

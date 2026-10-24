@@ -1019,6 +1019,114 @@ html[data-loading="true"] body { overflow: hidden; }
 
 .client-logo svg{display:block;flex-shrink:0}.client-logo svg.client-symbol{fill:#df0000}.client-logo svg.client-vestel{fill:#dd052b}
 
+/* Native horizontal scrolling remains available until enhancement succeeds. */
+.phone-viewport{width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;position:relative;cursor:grab}
+.phone-viewport::-webkit-scrollbar{display:none}
+.phone-viewport .phone-track{width:max-content;max-width:none;overflow:visible;scroll-snap-type:none;margin:0}
+.phone-viewport .phone-card{scroll-snap-align:none}
+.phone-viewport.phones-enhanced{overflow:hidden;touch-action:pan-y}
+.phones-enhanced .phone-track{will-change:transform;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.phone-viewport.is-dragging,.phone-viewport.is-dragging .phone-track{cursor:grabbing}
+.phone-viewport:focus-visible{outline:2px solid #2877b4;outline-offset:4px;border-radius:12px}
+@media(prefers-reduced-motion:reduce){.phones-enhanced .phone-track{will-change:auto}}
+/* A rotating brand edge around the dashboard; the UI itself stays still. */
+@property --panel-frame-angle {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+.platform-stage { position: relative; isolation: isolate; overflow: visible; }
+.platform-panel-frame > .platform-ring {
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  display: block;
+  border-radius: 20px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--panel-frame-angle),
+    #06376877 0deg,
+    #2178c4ed 55deg,
+    #2178c428 105deg,
+    #ff6b1826 162deg,
+    #ff6b18f0 224deg,
+    #ff9a5ba6 268deg,
+    #06376877 360deg
+  );
+  animation: panel-frame-turn 12s linear infinite;
+}
+.platform-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(13px);
+  opacity: .42;
+  pointer-events: none;
+}
+.platform-panel-frame > .platform-app {
+  position: relative;
+  z-index: 1;
+  border-radius: 18px;
+}
+
+/* Pseudo-element animation avoids the hero's intentional animation:none. */
+.search-card {
+  isolation: isolate;
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+}
+.search-card::before {
+  content: '';
+  position: absolute;
+  inset: -1.7px;
+  z-index: -2;
+  border-radius: 18px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--panel-frame-angle),
+    #2178c451 0deg,
+    #2178c4de 70deg,
+    #2178c424 130deg,
+    #ff6b18ed 225deg,
+    #ff9a5b6b 280deg,
+    #2178c451 360deg
+  );
+  box-shadow: 0 0 22px #2178c421;
+  animation: panel-frame-turn 12s linear -4s infinite;
+}
+.search-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--panel);
+  pointer-events: none;
+}
+[data-theme="day"] .platform-ring::before { opacity: .28; }
+[data-theme="day"] .search-card::before { box-shadow: 0 0 18px #06376812; }
+@keyframes panel-frame-turn {
+  from { --panel-frame-angle: 0deg; }
+  to { --panel-frame-angle: 360deg; }
+}
+@media (max-width: 540px) {
+  .platform-ring::before { filter: blur(9px); opacity: .3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .platform-panel-frame > .platform-ring,
+  .search-card::before {
+    animation: none;
+    --panel-frame-angle: 38deg;
+  }
+}
+
+.ws-chart-head{flex-wrap:wrap;row-gap:8px}.chart-legend{margin-left:auto}
+
+.platform-panel-frame{position:relative;isolation:isolate}
 </style>
 </head>
 <body id="top">
@@ -1187,7 +1295,7 @@ html[data-loading="true"] body { overflow: hidden; }
           <div class="mini-tag"><span><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg></span> Verinin içindeki fırsatı görün.</div>
           <div class="search-card">
             <div class="window-top"><i></i><i></i><i></i><span>ASİLSERP / ÖRNEK RAPOR</span></div>
-            <div class="score-row"><div><div class="site-label">SİTENİZE GENEL BAKIŞ</div><div class="site-id">ornek.com <span style="color:var(--muted);font-size:12px"><svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></span></div><div class="site-date">Büyük resmi tek bakışta görün.</div></div><div class="score"><svg viewBox="0 0 74 74"><circle class="track" cx="37" cy="37" r="32"/><circle class="progress" cx="37" cy="37" r="32"/></svg><div class="score-value">82<small>SEO PUANI</small></div></div></div>
+            <div class="score-row"><div><div class="site-label">SİTENİZE GENEL BAKIŞ</div><div class="site-id">Sizin siteniz <span style="color:var(--muted);font-size:12px"><svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></span></div><div class="site-date">Büyük resmi tek bakışta görün.</div></div><div class="score"><svg viewBox="0 0 74 74"><circle class="track" cx="37" cy="37" r="32"/><circle class="progress" cx="37" cy="37" r="32"/></svg><div class="score-value">82<small>SEO PUANI</small></div></div></div>
             <div class="metrics"><div class="metric"><small>İçerik fırsatları</small><strong>24</strong><span><svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg> keşfedin</span></div><div class="metric"><small>Teknik uyarılar</small><strong>12</strong><span>incelenebilir</span></div></div>
             <div class="audit-row"><span>Bir sonraki adımınız</span><span class="audit-state">Fırsatları keşfedin <svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></span></div>
             <div class="rank-pill"><b><svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></b><span>KEŞFEDİN</span></div>
@@ -1212,6 +1320,8 @@ html[data-loading="true"] body { overflow: hidden; }
           <button class="platform-tab" id="tab-technical" type="button" role="tab" data-workspace="technical" aria-selected="false" aria-controls="workspace-panel" tabindex="-1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5zM6.5 10l2.5 2.5 4.5-5"/></svg>Teknik SEO</button>
         </div>
         <div class="platform-stage">
+          <div class="platform-panel-frame">
+          <span class="platform-ring" aria-hidden="true"></span>
           <div class="platform-app">
             <div class="app-chrome"><span class="chrome-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="chrome-address"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2"/></svg>asilserp / çalışma alanınız</span><span class="sample-badge">ÖRNEK VERİLER</span></div>
             <div class="app-layout">
@@ -1225,11 +1335,11 @@ html[data-loading="true"] body { overflow: hidden; }
                 <div class="sidebar-tip"><strong>Veriye bir de buradan bakın.</strong><p>Araçlar arasında geçiş yapın. Sitenizin farklı yönlerini aynı çalışma alanında keşfedin.</p></div>
               </aside>
               <div class="workspace" id="workspace-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-overview">
-                <div class="workspace-toolbar"><div><div class="workspace-breadcrumb">Çalışma alanı / ornek.com</div><h3 id="workspace-title">Genel bakış</h3></div><div class="period-controls" role="group" aria-label="Örnek veri dönemi"><button type="button" class="period-button" data-period="30" aria-pressed="true">30 gün</button><button type="button" class="period-button" data-period="90" aria-pressed="false">90 gün</button></div></div>
+                <div class="workspace-toolbar"><div><div class="workspace-breadcrumb">Çalışma alanı / Sizin siteniz</div><h3 id="workspace-title">Genel bakış</h3></div><div class="period-controls" role="group" aria-label="Örnek veri dönemi"><button type="button" class="period-button" data-period="30" aria-pressed="true">30 gün</button><button type="button" class="period-button" data-period="90" aria-pressed="false">90 gün</button></div></div>
                 <div class="workspace-metrics" id="workspace-metrics"></div>
                 <div class="workspace-middle">
                   <figure class="ws-chart" aria-labelledby="workspace-chart-title">
-                    <div class="ws-chart-head"><h4 id="workspace-chart-title">Organik görünürlük</h4><div class="chart-legend" aria-hidden="true"><span><i></i>ornek.com</span><span><i></i>Karşılaştırma</span></div></div>
+                    <div class="ws-chart-head"><h4 id="workspace-chart-title">Organik görünürlük</h4><div class="chart-legend" aria-hidden="true"><span><i></i>Sizin siteniz</span><span><i></i>Karşılaştırma</span></div></div>
                     <svg class="workspace-graph" viewBox="0 0 520 155" role="group" aria-labelledby="workspace-graph-description" preserveAspectRatio="none"><title id="workspace-graph-description">Örnek görünürlük grafiği</title><defs><linearGradient id="traffic-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b18" stop-opacity=".17"/><stop offset="1" stop-color="#ff6b18" stop-opacity="0"/></linearGradient></defs><path class="graph-grid" d="M32 15H505M32 44.25H505M32 73.5H505M32 102.75H505"/><text x="0" y="18">100</text><text x="6" y="47.25">75</text><text x="6" y="76.5">50</text><text x="6" y="105.75">25</text><path class="graph-area" id="workspace-area" d=""/><path class="graph-comparison" id="workspace-comparison" d=""/><path class="graph-main" id="workspace-line" d=""/><circle id="workspace-endpoint" r="3.5" fill="#ff6b18"/><g id="workspace-chart-points" role="group" aria-label="Örnek grafik noktaları. Sağ ve sol ok tuşlarıyla gezinin."></g><text class="graph-start" x="32" y="145">30 gün önce</text><text x="477" y="145">Bugün</text></svg>
                     <div class="graph-tooltip" id="workspace-chart-tooltip" role="tooltip" hidden><span></span><strong></strong><small>Örnek görünürlük endeksi</small></div>
                     <figcaption id="workspace-chart-caption">Örnek görünürlük endeksi · 0–100</figcaption>
@@ -1239,6 +1349,7 @@ html[data-loading="true"] body { overflow: hidden; }
                 <div class="workspace-table-card"><div class="table-caption"><h4 id="workspace-table-title">Öne çıkan kelimeler</h4><span>Örnek rapordan</span></div><table class="workspace-table" aria-labelledby="workspace-table-title"><thead id="workspace-table-head"></thead><tbody id="workspace-table-body"></tbody></table></div>
               </div>
             </div>
+          </div>
           </div>
           <p id="workspace-status" class="sr-only" aria-live="polite"></p>
           <div class="platform-bottomline"><p>Etkileşimli ürün önizlemesi. Veriler örnektir; gerçek site analizi yapılmaz.</p><button type="button" data-focus-domain>Kendi alan adınızla başlayın <svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></button></div>
@@ -1251,7 +1362,7 @@ html[data-loading="true"] body { overflow: hidden; }
       <section class="mobile-showcase" id="mobile-showcase" aria-labelledby="mobile-title">
         <div class="mobile-intro"><p class="section-kicker">BÜYÜK FİKİRLER, HER EKRANDA.</p><h2 id="mobile-title">İster mobilden gir,<br>ister masaüstünden.<br><span>SEO kontrolü hep sende.</span></h2><p>Masada, yolda, toplantı arasında. Sıralamalarınıza, sayfalarınıza ve raporlarınıza aynı net bakışla ulaşın.</p></div>
         <div class="phone-controls"><span>ASİLSERP · MOBİL DENEYİM</span><div class="phone-buttons"><button type="button" data-phone-prev aria-label="Önceki telefon ekranı"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 5-5 5 5 5"/></svg></button><button type="button" class="phone-pause" aria-pressed="false" aria-label="Otomatik kaydırmayı durdur"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h3v12H3zM10 2h3v12h-3z"/></svg></button><button type="button" data-phone-next aria-label="Sonraki telefon ekranı"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5"/></svg></button></div></div>
-        <div class="phone-track" tabindex="0" role="region" aria-label="Beş örnek mobil ekran. Kaydırın veya sağ ve sol ok tuşlarını kullanın."><figure class="phone-card" aria-label="Genel bakış için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">ornek.com / Çalışma alanı</p><h4 class="phone-heading">Genel bakış</h4><div class="phone-feature dark"><span class="phone-label">TAHMİNİ ORGANİK TRAFİK</span><strong class="phone-large">24.800</strong><span class="phone-growth"><svg class="inline-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg> %18,4 · Önceki aya göre</span><svg class="phone-chart" viewBox="0 0 200 70" aria-hidden="true"><path class="phone-chart-grid" d="M0 15H200M0 35H200M0 55H200"/><path d="M2 61 20 52 38 55 56 41 74 47 92 32 110 35 128 20 146 26 164 11 182 16 198 4"/></svg></div><div class="phone-mini-grid"><div class="phone-mini"><small>Anahtar kelime</small><b>1.284</b></div><div class="phone-mini"><small>İlk 10’da</small><b>216</b></div></div><p class="phone-section-label">Sıradaki adımınız</p><div class="phone-list"><div class="phone-row"><span>Organik sıralamalar<small>Görünür olduğunuz kelimeler</small></span><span class="phone-chip ">İncele <svg class="inline-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></span></div></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>01 / GENEL BAKIŞ</small><h3>Büyük resim, cebinizde.</h3></figcaption></figure><figure class="phone-card" aria-label="Sıralamalar için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">ornek.com / Çalışma alanı</p><h4 class="phone-heading">Sıralamalar</h4><div class="phone-search">⌕ &nbsp; Anahtar kelimelerde ara</div><div class="phone-mini-grid"><div class="phone-mini"><small>Toplam kelime</small><b>1.284</b></div><div class="phone-mini"><small>İlk 10’da</small><b>216</b></div></div><p class="phone-section-label">Kelime / sıralama</p><div class="phone-list"><div class="phone-row"><span>seo analizi<small>/seo-analizi</small></span><span class="phone-chip good">3. sıra</span></div><div class="phone-row"><span>site analizi<small>/site-analizi</small></span><span class="phone-chip good">5. sıra</span></div><div class="phone-row"><span>seo araçları<small>/araclar</small></span><span class="phone-chip ">12. sıra</span></div><div class="phone-row"><span>organik trafik<small>/blog/organik-trafik</small></span><span class="phone-chip ">18. sıra</span></div></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>02 / ORGANİK SIRALAMALAR</small><h3>Her kelimenin yerini bilin.</h3></figcaption></figure><figure class="phone-card" aria-label="En iyi sayfalar için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">ornek.com / Çalışma alanı</p><h4 class="phone-heading">En iyi sayfalar</h4><div class="phone-feature dark"><span class="phone-label">ÖNE ÇIKAN SAYFA</span><strong class="phone-large" style="font-size:23px;letter-spacing:-.7px">/seo-analizi</strong><span class="phone-growth">Tahmini trafik payı · %38</span></div><div class="phone-feature"><span class="phone-label">SAYFALARA GÖRE TRAFİK PAYI</span><div class="phone-bar"><div class="phone-bar-label"><span>/seo-analizi</span><b>%38</b></div><div class="phone-bar-track"><div class="phone-bar-fill" style="--bar:76%"></div></div></div><div class="phone-bar"><div class="phone-bar-label"><span>/site-analizi</span><b>%27</b></div><div class="phone-bar-track"><div class="phone-bar-fill" style="--bar:54%"></div></div></div><div class="phone-bar"><div class="phone-bar-label"><span>/blog</span><b>%21</b></div><div class="phone-bar-track"><div class="phone-bar-fill" style="--bar:42%"></div></div></div><div class="phone-bar"><div class="phone-bar-label"><span>/araclar</span><b>%14</b></div><div class="phone-bar-track"><div class="phone-bar-fill" style="--bar:28%"></div></div></div></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>03 / EN İYİ SAYFALAR</small><h3>Güçlü sayfaları keşfedin.</h3></figcaption></figure><figure class="phone-card" aria-label="Site denetimi için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">ornek.com / Çalışma alanı</p><h4 class="phone-heading">Site denetimi</h4><div class="phone-feature"><div class="phone-score"><div class="phone-ring">80</div><span>İncelenen sayfa · Örnek denetim</span></div></div><div class="phone-list"><div class="phone-row"><span>Kırık iç bağlantı<small>Öncelikli kontrol</small></span><span class="phone-chip ">3 sayfa</span></div><div class="phone-row"><span>Eksik meta açıklama<small>İyileştirme fırsatı</small></span><span class="phone-chip ">12 sayfa</span></div><div class="phone-row"><span>Tekrarlanan başlık<small>İnceleme gerekli</small></span><span class="phone-chip ">6 sayfa</span></div></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>04 / SİTE DENETİMİ</small><h3>Önceliğiniz net olsun.</h3></figcaption></figure><figure class="phone-card" aria-label="Raporlarım için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">ornek.com / Çalışma alanı</p><h4 class="phone-heading">Raporlarım</h4><div class="phone-feature dark"><span class="phone-label">ÇALIŞMA ALANINIZ</span><strong class="phone-large" style="font-size:25px">ornek.com</strong><span class="phone-growth">Türkiye · Türkçe</span></div><p class="phone-section-label">Kaydedilen raporlar</p><div class="phone-list"><div class="phone-row"><span>Alan adı analizi<small>24 Haziran · Örnek rapor</small></span><span class="phone-chip good">Hazır</span></div><div class="phone-row"><span>Organik sıralamalar<small>23 Haziran · Örnek rapor</small></span><span class="phone-chip good">Hazır</span></div><div class="phone-row"><span>Site denetimi<small>21 Haziran · Örnek rapor</small></span><span class="phone-chip good">Hazır</span></div></div><div class="phone-button-art">CSV olarak dışa aktar <svg class="inline-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>05 / KAYITLI RAPORLAR</small><h3>Veriniz hep elinizin altında.</h3></figcaption></figure></div><div class="phone-progress" aria-hidden="true"><span></span></div><p class="mobile-caption">Ekranlar ve veriler tasarım önizlemesidir. Asilserp’in mobil web deneyimi için hazırlanmıştır.</p>
+        <div class="phone-viewport" tabindex="0" role="region" aria-label="Beş örnek mobil ekran. Kaydırın veya sağ ve sol ok tuşlarını kullanın."><div class="phone-track"><figure class="phone-card" aria-label="Genel bakış için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">Sizin siteniz / Çalışma alanı</p><h4 class="phone-heading">Genel bakış</h4><div class="phone-feature dark"><span class="phone-label">TAHMİNİ ORGANİK TRAFİK</span><strong class="phone-large">24.800</strong><span class="phone-growth"><svg class="inline-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg> %18,4 · Önceki aya göre</span><svg class="phone-chart" viewBox="0 0 200 70" aria-hidden="true"><path class="phone-chart-grid" d="M0 15H200M0 35H200M0 55H200"/><path d="M2 61 20 52 38 55 56 41 74 47 92 32 110 35 128 20 146 26 164 11 182 16 198 4"/></svg></div><div class="phone-mini-grid"><div class="phone-mini"><small>Anahtar kelime</small><b>1.284</b></div><div class="phone-mini"><small>İlk 10’da</small><b>216</b></div></div><p class="phone-section-label">Sıradaki adımınız</p><div class="phone-list"><div class="phone-row"><span>Organik sıralamalar<small>Görünür olduğunuz kelimeler</small></span><span class="phone-chip ">İncele <svg class="inline-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></span></div></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>01 / GENEL BAKIŞ</small><h3>Büyük resim, cebinizde.</h3></figcaption></figure><figure class="phone-card" aria-label="Sıralamalar için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">Sizin siteniz / Çalışma alanı</p><h4 class="phone-heading">Sıralamalar</h4><div class="phone-search">⌕ &nbsp; Anahtar kelimelerde ara</div><div class="phone-mini-grid"><div class="phone-mini"><small>Toplam kelime</small><b>1.284</b></div><div class="phone-mini"><small>İlk 10’da</small><b>216</b></div></div><p class="phone-section-label">Kelime / sıralama</p><div class="phone-list"><div class="phone-row"><span>seo analizi<small>/seo-analizi</small></span><span class="phone-chip good">3. sıra</span></div><div class="phone-row"><span>site analizi<small>/site-analizi</small></span><span class="phone-chip good">5. sıra</span></div><div class="phone-row"><span>seo araçları<small>/araclar</small></span><span class="phone-chip ">12. sıra</span></div><div class="phone-row"><span>organik trafik<small>/blog/organik-trafik</small></span><span class="phone-chip ">18. sıra</span></div></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>02 / ORGANİK SIRALAMALAR</small><h3>Her kelimenin yerini bilin.</h3></figcaption></figure><figure class="phone-card" aria-label="En iyi sayfalar için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">Sizin siteniz / Çalışma alanı</p><h4 class="phone-heading">En iyi sayfalar</h4><div class="phone-feature dark"><span class="phone-label">ÖNE ÇIKAN SAYFA</span><strong class="phone-large" style="font-size:23px;letter-spacing:-.7px">/seo-analizi</strong><span class="phone-growth">Tahmini trafik payı · %38</span></div><div class="phone-feature"><span class="phone-label">SAYFALARA GÖRE TRAFİK PAYI</span><div class="phone-bar"><div class="phone-bar-label"><span>/seo-analizi</span><b>%38</b></div><div class="phone-bar-track"><div class="phone-bar-fill" style="--bar:76%"></div></div></div><div class="phone-bar"><div class="phone-bar-label"><span>/site-analizi</span><b>%27</b></div><div class="phone-bar-track"><div class="phone-bar-fill" style="--bar:54%"></div></div></div><div class="phone-bar"><div class="phone-bar-label"><span>/blog</span><b>%21</b></div><div class="phone-bar-track"><div class="phone-bar-fill" style="--bar:42%"></div></div></div><div class="phone-bar"><div class="phone-bar-label"><span>/araclar</span><b>%14</b></div><div class="phone-bar-track"><div class="phone-bar-fill" style="--bar:28%"></div></div></div></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>03 / EN İYİ SAYFALAR</small><h3>Güçlü sayfaları keşfedin.</h3></figcaption></figure><figure class="phone-card" aria-label="Site denetimi için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">Sizin siteniz / Çalışma alanı</p><h4 class="phone-heading">Site denetimi</h4><div class="phone-feature"><div class="phone-score"><div class="phone-ring">80</div><span>İncelenen sayfa · Örnek denetim</span></div></div><div class="phone-list"><div class="phone-row"><span>Kırık iç bağlantı<small>Öncelikli kontrol</small></span><span class="phone-chip ">3 sayfa</span></div><div class="phone-row"><span>Eksik meta açıklama<small>İyileştirme fırsatı</small></span><span class="phone-chip ">12 sayfa</span></div><div class="phone-row"><span>Tekrarlanan başlık<small>İnceleme gerekli</small></span><span class="phone-chip ">6 sayfa</span></div></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>04 / SİTE DENETİMİ</small><h3>Önceliğiniz net olsun.</h3></figcaption></figure><figure class="phone-card" aria-label="Raporlarım için örnek mobil görünüm"><div class="phone-frame"><div class="phone-screen"><div class="phone-status" aria-hidden="true">9:41<span class="phone-island"></span><span class="phone-status-icons"><span class="phone-signal"><i></i><i></i><i></i><i></i></span><span class="phone-battery"></span></span></div><div class="phone-appbar"><span class="phone-brand"><svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="m20.5 20.5 8 8M7 16l4-4 4 3 5-6"/></svg>asilserp</span><span class="phone-avatar">AS</span></div><p class="phone-kicker">Sizin siteniz / Çalışma alanı</p><h4 class="phone-heading">Raporlarım</h4><div class="phone-feature dark"><span class="phone-label">ÇALIŞMA ALANINIZ</span><strong class="phone-large" style="font-size:25px">Sizin siteniz</strong><span class="phone-growth">Türkiye · Türkçe</span></div><p class="phone-section-label">Kaydedilen raporlar</p><div class="phone-list"><div class="phone-row"><span>Alan adı analizi<small>24 Haziran · Örnek rapor</small></span><span class="phone-chip good">Hazır</span></div><div class="phone-row"><span>Organik sıralamalar<small>23 Haziran · Örnek rapor</small></span><span class="phone-chip good">Hazır</span></div><div class="phone-row"><span>Site denetimi<small>21 Haziran · Örnek rapor</small></span><span class="phone-chip good">Hazır</span></div></div><div class="phone-button-art">CSV olarak dışa aktar <svg class="inline-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></div><div class="phone-bottom" aria-hidden="true"><span><svg viewBox="0 0 20 20"><path d="M3 9 10 3l7 6v8H3zM8 17v-6h4v6"/></svg>Genel bakış</span><span><svg viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14V6M1 17h18"/></svg>Sıralamalar</span><span><svg viewBox="0 0 20 20"><path d="m10 2 7 3v5c0 4-7 8-7 8S3 14 3 10V5z"/></svg>Denetim</span><span><svg viewBox="0 0 20 20"><rect x="4" y="2" width="12" height="16" rx="2"/><path d="M7 7h6M7 11h6M7 14h4"/></svg>Raporlar</span></div><span class="phone-home" aria-hidden="true"></span></div></div><figcaption><small>05 / KAYITLI RAPORLAR</small><h3>Veriniz hep elinizin altında.</h3></figcaption></figure></div></div><div class="phone-progress" aria-hidden="true"><span></span></div><p class="mobile-caption">Ekranlar ve veriler tasarım önizlemesidir. Asilserp’in mobil web deneyimi için hazırlanmıştır.</p>
       </section>
     </main>
   </div>
@@ -1306,10 +1417,10 @@ html[data-loading="true"] body { overflow: hidden; }
   </div>
 </footer>
 
-  <span class="prototype-note">ASİLSERP · TASARIM ÇALIŞMASI 06</span>
+  <span class="prototype-note">ASİLSERP · TASARIM ÇALIŞMASI 07</span>
   <div class="theme-dock" role="group" aria-label="Tasarım görünümünü seç"><span class="theme-label">GÖRÜNÜM</span><button class="theme-button" data-theme-option="night" aria-pressed="true"><span class="swatch night" aria-hidden="true"></span>Koyu</button><button class="theme-button" data-theme-option="day" aria-pressed="false"><span class="swatch day" aria-hidden="true"></span>Açık</button><button class="theme-button" data-theme-option="vivid" aria-pressed="false"><span class="swatch vivid" aria-hidden="true"></span>Lacivert</button><button class="motion-toggle" type="button" aria-pressed="false" aria-label="Animasyonları durdur" title="Animasyonları durdur"><svg class="pause-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h3v12H3zM10 2h3v12h-3z"/></svg><svg class="play-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 2 10 6-10 6z"/></svg></button></div>
   <dialog id="approach" aria-labelledby="approach-title"><button class="modal-close" aria-label="Pencereyi kapat">×</button><p class="modal-kicker">VERİDEN AKSİYONA</p><h2 id="approach-title">Büyük resmi görün.<br><span class="modal-accent">Doğru adımı atın.</span></h2><div class="step"><span>01</span><div><b>Alan adınızı girin.</b><p>Sitenizi veya incelemek istediğiniz bir alan adını giriş kutusuna yazın.</p></div></div><div class="step"><span>02</span><div><b>Rapor görünümünü keşfedin.</b><p>SEO puanı, teknik uyarılar ve içerik fırsatlarını aynı ekranda inceleyin.</p></div></div><div class="step"><span>03</span><div><b>Önceliklerinizi belirleyin.</b><p>Site sağlığından içerik planına kadar bir sonraki adımınız için net bir bakış açısı edinin.</p></div></div><p class="form-note">Bu prototip örnek veriler gösterir. Gerçek analiz servisi henüz bağlanmamıştır.</p></dialog>
-  <dialog id="report" class="analysis-dialog" aria-labelledby="report-title"><button class="modal-close" aria-label="Pencereyi kapat">×</button><p class="modal-kicker">ASİLSERP / ÖRNEK RAPOR</p><h2 id="report-title" class="report-domain">ornek.com</h2><p class="demo-banner">Bu bir tasarım önizlemesidir. Aşağıdaki değerler sabit örnek veridir; girilen site taranmadı.</p><div class="report-metrics"><div class="report-stat"><small>SEO puanı / 100</small><strong>82</strong></div><div class="report-stat"><small>İçerik fırsatları</small><strong>24</strong></div><div class="report-stat"><small>Teknik uyarılar</small><strong>12</strong></div></div><table class="report-table"><thead><tr><th scope="col">ÖRNEK KONTROL</th><th scope="col">ÖRNEK DURUM</th></tr></thead><tbody><tr><td>Sayfa başlıkları</td><td>İyileştirilebilir</td></tr><tr><td>Meta açıklamalar</td><td>İncelenmeli</td></tr><tr><td>Mobil görünüm</td><td>İyi</td></tr><tr><td>İç bağlantılar</td><td>Fırsat var</td></tr></tbody></table><p class="report-next">Canlı sonuçlar için mevcut analiz servisiyle bağlantı kurulması gerekir.</p></dialog>
+  <dialog id="report" class="analysis-dialog" aria-labelledby="report-title"><button class="modal-close" aria-label="Pencereyi kapat">×</button><p class="modal-kicker">ASİLSERP / ÖRNEK RAPOR</p><h2 id="report-title" class="report-domain">Sizin siteniz</h2><p class="demo-banner">Bu bir tasarım önizlemesidir. Aşağıdaki değerler sabit örnek veridir; girilen site taranmadı.</p><div class="report-metrics"><div class="report-stat"><small>SEO puanı / 100</small><strong>82</strong></div><div class="report-stat"><small>İçerik fırsatları</small><strong>24</strong></div><div class="report-stat"><small>Teknik uyarılar</small><strong>12</strong></div></div><table class="report-table"><thead><tr><th scope="col">ÖRNEK KONTROL</th><th scope="col">ÖRNEK DURUM</th></tr></thead><tbody><tr><td>Sayfa başlıkları</td><td>İyileştirilebilir</td></tr><tr><td>Meta açıklamalar</td><td>İncelenmeli</td></tr><tr><td>Mobil görünüm</td><td>İyi</td></tr><tr><td>İç bağlantılar</td><td>Fırsat var</td></tr></tbody></table><p class="report-next">Canlı sonuçlar için mevcut analiz servisiyle bağlantı kurulması gerekir.</p></dialog>
   <dialog id="service" aria-labelledby="service-title"><button class="modal-close" aria-label="Pencereyi kapat">×</button><p class="modal-kicker">SEO ARAÇLARI</p><h2 id="service-title"></h2><p id="service-description"></p><button class="primary" data-demo>Örnek raporu aç <span class="arrow" aria-hidden="true"><svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></span></button></dialog>
   <dialog id="platform-insight" aria-labelledby="insight-title"><button class="modal-close" aria-label="Pencereyi kapat">×</button><p class="modal-kicker">ÖRNEK FIRSAT ANALİZİ</p><h2 id="insight-title"></h2><p id="insight-description"></p><ol class="insight-steps" id="insight-steps"></ol><p class="form-note">Bu öneriler ürün önizlemesi içindir; sitenize ait gerçek bulgular değildir.</p><button class="primary" type="button" data-focus-domain>Alan adınızı girin <svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></button></dialog>
 <dialog id="tool-details" aria-labelledby="tool-modal-title"><button class="modal-close" aria-label="Pencereyi kapat">×</button><div class="tool-modal-icon" aria-hidden="true"></div><p class="tool-modal-meta"></p><h2 id="tool-modal-title"></h2><p class="tool-modal-copy"></p><ul class="tool-modal-list"></ul><p class="tool-modal-note"></p><div class="tool-modal-actions"><button class="primary" type="button" id="tool-preview">Örnek paneli incele <svg class="arrow-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></button><a class="tool-secondary" href="https://asilserp.com/customer-login" id="tool-panel-link">Asilserp paneline git <svg class="inline-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a></div></dialog>
@@ -1374,7 +1485,7 @@ html[data-loading="true"] body { overflow: hidden; }
       const services={seo:['Sitenizin büyük resmi.','Teknik SEO kontrolleri, sayfa başlıkları ve iç bağlantıları bir arada incelemek için tasarlanan rapor görünümü.'],content:['Doğru kelime, yeni fırsat.','Arama niyeti ve içerik fırsatlarını keşfetmeye yönelik araç alanı. Bu ilk prototipte örnek genel rapor sunulmaktadır.'],experience:['Rekabeti daha iyi anlayın.','Rakiplerin görünürlüğünü ve içerik fırsatlarını karşılaştırmaya yönelik araç alanı. Canlı veri bağlantısı sonraki geliştirme aşamasıdır.']};
       document.querySelectorAll('[data-service]').forEach(button=>button.addEventListener('click',()=>{const [title,description]=services[button.dataset.service];document.getElementById('service-title').textContent=title;document.getElementById('service-description').textContent=description;openDialog('service')}));
       function showReport(domain){document.getElementById('report-title').textContent=domain;openDialog('report')}
-      document.querySelectorAll('[data-demo]').forEach(button=>button.addEventListener('click',()=>showReport('ornek.com')));
+      document.querySelectorAll('[data-demo]').forEach(button=>button.addEventListener('click',()=>showReport('Sizin siteniz')));
       const domainField=document.getElementById('domain');
       const domainError=document.getElementById('domain-error');
       document.querySelectorAll('[data-focus-domain]').forEach(button=>button.addEventListener('click',()=>{closeNav();document.querySelectorAll('dialog[open]').forEach(dialog=>dialog.close());domainField.scrollIntoView({block:'center'});domainField.focus()}));
@@ -1394,7 +1505,7 @@ html[data-loading="true"] body { overflow: hidden; }
       const workspaceData={
         overview:{title:'Genel bakış',metrics:[['Tahmini organik trafik','24.800','68.400','%18,4 artış'],['Anahtar kelimeler','1.284','1.596','146 yeni kelime'],['İlk 10’daki kelimeler','216','342','32 kelime yükseldi'],['Site sağlığı','92','94','100 üzerinden']],chart:'Organik görünürlük',caption:'Örnek görünürlük endeksi · 0–100',series:[32,36,34,43,40,51,48,62,58,71,76,84],table:'Öne çıkan kelimeler',head:['Anahtar kelime','Arama hacmi','Sıralama'],rows:[['seo analizi','9.900','3. sıra'],['site analizi','6.600','5. sıra'],['rakip analizi','2.900','8. sıra']],opportunity:'İlk sayfaya bir adım kaldı.',description:'12 kelimeniz ilk sayfanın hemen gerisinde. Doğru içerik güncellemesiyle görünürlük fırsatlarını değerlendirin.',steps:['8–15. sıralardaki örnek kelimeleri inceleyin.','Arama niyetine uymayan başlık ve içerikleri belirleyin.','Değişikliklerden sonra aynı kelimelerin gelişimini karşılaştırın.']},
         keywords:{title:'Anahtar kelimeler',metrics:[['İncelenen kelimeler','1.284','1.596','146 yeni fırsat'],['İçerik fırsatları','146','218','Önceliklendirilebilir'],['Toplam arama hacmi','86.200','92.600','Aylık tahmini hacim'],['Ort. zorluk','32','35','100 üzerinden']],chart:'Kelime görünürlüğü',caption:'Örnek kelime görünürlük endeksi · 0–100',series:[20,23,29,27,38,43,39,53,64,60,72,81],table:'Keşfedilecek kelimeler',head:['Anahtar kelime','Arama hacmi','Zorluk'],rows:[['ücretsiz seo analizi','9.900','22 / 100'],['site hız testi','6.600','31 / 100'],['anahtar kelime bulma','4.400','28 / 100']],opportunity:'Bir içerik. Yeni bir fırsat.',description:'Yüksek arama ilgisi ile ulaşılabilir rekabeti bir araya getiren kelimeleri içerik planınıza taşıyın.',steps:['Hedef kitlenizin sorularına karşılık gelen kelimeleri seçin.','Arama niyeti ve örnek zorluk değerini birlikte değerlendirin.','Benzer konuları tek bir içerik kümesinde planlayın.']},
-        competitors:{title:'Rakip analizi',metrics:[['Karşılaştırılan siteler','4','4','Aynı rekabet grubu'],['Ortak kelimeler','348','412','Kesişimdeki fırsatlar'],['İçerik boşlukları','92','126','Yeni konu alanları'],['Görünürlük payı','%36','%42','Örnek rekabet payı']],chart:'Karşılaştırmalı görünürlük',caption:'Örnek görünürlük endeksi · Siteniz ve rakip ortalaması',series:[25,31,28,42,39,54,51,66,63,74,80,88],table:'Rekabet görünümü',head:['Örnek alan adı','Ortak kelime','Görünürlük'],rows:[['ornek.com','348','%36'],['rakip-a.example','296','%29'],['rakip-b.example','184','%21']],opportunity:'Rakipte var. Sizde neden olmasın?',description:'Rakiplerin görünür olduğu, sitenizin henüz yer almadığı konu alanlarını keşfedin.',steps:['Aynı arama niyetinde rekabet ettiğiniz alan adlarını seçin.','Ortak kelimeler ve içerik boşluklarını karşılaştırın.','Markanıza uygun fırsatları öncelik sırasına koyun.']},
+        competitors:{title:'Rakip analizi',metrics:[['Karşılaştırılan siteler','4','4','Aynı rekabet grubu'],['Ortak kelimeler','348','412','Kesişimdeki fırsatlar'],['İçerik boşlukları','92','126','Yeni konu alanları'],['Görünürlük payı','%36','%42','Örnek rekabet payı']],chart:'Karşılaştırmalı görünürlük',caption:'Örnek görünürlük endeksi · Siteniz ve rakip ortalaması',series:[25,31,28,42,39,54,51,66,63,74,80,88],table:'Rekabet görünümü',head:['Örnek alan adı','Ortak kelime','Görünürlük'],rows:[['Sizin siteniz','348','%36'],['rakip-a.example','296','%29'],['rakip-b.example','184','%21']],opportunity:'Rakipte var. Sizde neden olmasın?',description:'Rakiplerin görünür olduğu, sitenizin henüz yer almadığı konu alanlarını keşfedin.',steps:['Aynı arama niyetinde rekabet ettiğiniz alan adlarını seçin.','Ortak kelimeler ve içerik boşluklarını karşılaştırın.','Markanıza uygun fırsatları öncelik sırasına koyun.']},
         technical:{title:'Teknik SEO',metrics:[['Site sağlığı','92','94','100 üzerinden'],['İncelenen sayfalar','80','100','En fazla 100 sayfa'],['Kritik sorunlar','3','2','Öncelikli inceleme'],['İyileştirmeler','18','12','Aksiyon bekliyor']],chart:'Site sağlığı gelişimi',caption:'Örnek site sağlığı puanı · 0–100',series:[63,66,70,69,76,78,79,83,82,88,90,92],table:'Öncelikli teknik kontroller',head:['Kontrol','Etkilenen sayfa','Öncelik'],rows:[['Kırık iç bağlantılar','3 sayfa','Yüksek'],['Eksik meta açıklama','12 sayfa','Orta'],['Tekrarlanan başlık','6 sayfa','Orta']],opportunity:'Küçük bir düzeltme. Büyük bir fark.',description:'Önce kritik bağlantıları, ardından sayfa başlıklarını inceleyin. Teknik işleri etkilerine göre sıralayın.',steps:['Yüksek öncelikli örnek sorun listesini inceleyin.','Düzeltilecek sayfaları ve sorumluları belirleyin.','Güncellemeden sonra yeniden kontrol ederek sonucu doğrulayın.']}
       };
       let activeWorkspace='overview';
@@ -1408,7 +1519,7 @@ html[data-loading="true"] body { overflow: hidden; }
         platformTabs.forEach(tab=>{const selected=tab.dataset.workspace===activeWorkspace;tab.setAttribute('aria-selected',String(selected));tab.tabIndex=selected?0:-1});
         document.querySelectorAll('.sidebar-button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.workspace===activeWorkspace)));
         document.querySelectorAll('[data-period]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.period===activePeriod)));
-        document.getElementById('workspace-metrics').innerHTML=data.metrics.map((metric,index)=>`<div class="ws-metric"><span class="ws-metric-label">${metric[0]}</span><strong class="ws-metric-value">${metric[activePeriod==='30'?1:2]}</strong><div class="ws-metric-foot"><span class="ws-metric-change">${activePeriod==='30'?metric[3]:'90 günlük örnek görünüm'}</span>${metricSparkline(data.series,index)}</div></div>`).join('');
+        document.getElementById('workspace-metrics').innerHTML=data.metrics.map((metric,index)=>`<div class="ws-metric"><span class="ws-metric-label">${metric[0]}</span><strong class="ws-metric-value">${metric[activePeriod==='30'?1:2]}</strong><div class="ws-metric-foot"><span class="ws-metric-change">${activePeriod==='30'?metric[3]:'90 günlük örnek görünüm'}</span>${metricSparkline(data.series,index,/Kritik sorunlar|İyileştirmeler/.test(metric[0]))}</div></div>`).join('');
         document.getElementById('workspace-chart-title').textContent=data.chart;
         document.getElementById('workspace-chart-caption').textContent=data.caption;
         const values=data.series.map((v,i)=>activePeriod==='90'?Math.min(97,Math.round(v*.85+i*1.8)):v);
@@ -1453,8 +1564,8 @@ html[data-loading="true"] body { overflow: hidden; }
       });
       document.querySelectorAll('.header .nav a,.catalog-menu-link').forEach(link=>link.addEventListener('click',closeNav));
       // Small trend previews are decorative; all graph values are illustrative.
-      function metricSparkline(series,index){
-        const values=series.map((v,i)=>index===2?100-v:v+(i%3)*index*2);
+      function metricSparkline(series,index,inverse=false){
+        const values=series.map((v,i)=>inverse?100-v:v+(i%3)*index*2);
         const min=Math.min(...values),max=Math.max(...values),range=Math.max(1,max-min);
         const path=values.map((v,i)=>(i?'L':'M')+(2+i*8.3).toFixed(1)+' '+(27-(v-min)/range*23).toFixed(1)).join(' ');
         return '<svg class="metric-sparkline" viewBox="0 0 96 30" aria-hidden="true"><path d="'+path+'"/></svg>';
@@ -1528,49 +1639,145 @@ html[data-loading="true"] body { overflow: hidden; }
       const toolObserver=new IntersectionObserver(entries=>entries.forEach(entry=>entry.target.classList.toggle('is-visible',entry.isIntersecting)),{rootMargin:'100px 0px',threshold:.01});
       toolCards.forEach(card=>toolObserver.observe(card));
 
+      // Five original screens plus one inaccessible visual copy form a seamless belt.
       const phoneTrack=document.querySelector('.phone-track');
       const phoneSection=document.getElementById('mobile-showcase');
       const phonePause=document.querySelector('.phone-pause');
-      let phonesPaused=false,phonesHovered=false,phonesVisible=false,lastPhoneInteraction=0;
-      const slideObserver=new IntersectionObserver(entries=>{phonesVisible=entries[0].isIntersecting},{threshold:.15});
-      slideObserver.observe(phoneSection);
-      function movePhones(direction,manual=true){
-        const limit=phoneTrack.scrollWidth-phoneTrack.clientWidth;
-        const step=phoneTrack.querySelector('.phone-card').getBoundingClientRect().width+parseFloat(getComputedStyle(phoneTrack).gap);
-        let target=phoneTrack.scrollLeft+direction*step;
-        if(direction>0 && phoneTrack.scrollLeft>=limit-3)target=0;
-        if(direction<0 && phoneTrack.scrollLeft<=3)target=limit;
-        phoneTrack.scrollTo({left:Math.max(0,Math.min(limit,target)),behavior:reducedMotion.matches?'instant':'smooth'});
-        if(manual)lastPhoneInteraction=Date.now();
+      const phoneViewport=phoneTrack.closest('.phone-viewport');
+      const originalPhones=[...phoneTrack.querySelectorAll('.phone-card')];
+      const phoneProgress=document.querySelector('.phone-progress');
+      let phonesPaused=false,phonesVisible=false,phonesHovered=false,phoneKeyboardFocus=false,phoneInputMode='keyboard';
+      let phonePhase=0,phoneCycle=0,phoneStep=0,phoneFrame=0,phoneLastFrame=0,phoneWake=0,phoneLastInteraction=-Infinity;
+      let phoneManual=null,phoneDrag=null;
+      const phoneCooldown=1200;
+      const phoneCopies=document.createDocumentFragment();
+      originalPhones.forEach(original=>{
+        const copy=original.cloneNode(true);copy.dataset.phoneClone='true';copy.setAttribute('aria-hidden','true');copy.inert=true;
+        copy.removeAttribute('id');copy.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
+        copy.querySelectorAll('[tabindex],a,button,input,select,textarea').forEach(node=>node.tabIndex=-1);
+        phoneCopies.append(copy);
+      });
+      phoneTrack.append(phoneCopies);
+      phoneTrack.removeAttribute('tabindex');phoneTrack.removeAttribute('role');phoneTrack.removeAttribute('aria-label');
+      phoneViewport.classList.add('phones-enhanced');
+      function phoneModulo(value,size){return size>0?((value%size)+size)%size:0}
+      function renderPhoneBelt(){
+        if(!phoneCycle)return;
+        const logical=phoneModulo(phonePhase,phoneCycle),density=devicePixelRatio||1;
+        const x=Math.round(logical*density)/density;
+        phoneTrack.style.transform='translate3d('+(-x)+'px,0,0)';
+        phoneProgress.style.setProperty('--phone-progress',(logical/phoneCycle*354.5)+'%');
+      }
+      function phoneBaseAutoAllowed(){return phonesVisible&&!document.hidden&&!phonesPaused&&!motionPaused&&!reducedMotion.matches&&!phoneDrag&&!phoneKeyboardFocus}
+      function phoneAutoAllowed(){return phoneBaseAutoAllowed()&&performance.now()-phoneLastInteraction>=phoneCooldown}
+      function updatePhonePause(){
+        phonePause.setAttribute('aria-pressed',String(phonesPaused));
+        phonePause.setAttribute('aria-label',phonesPaused?'Telefon ekranlarını otomatik kaydır':'Otomatik kaydırmayı durdur');
+        phonePause.innerHTML=phonesPaused?'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 2 10 6-10 6z"/></svg>':'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h3v12H3zM10 2h3v12h-3z"/></svg>';
+      }
+      function planPhoneWake(){
+        clearTimeout(phoneWake);
+        if(phoneBaseAutoAllowed()){
+          const wait=phoneCooldown-(performance.now()-phoneLastInteraction);
+          if(wait>0)phoneWake=setTimeout(refreshPhoneMotion,wait+16);
+        }
+      }
+      function wantsPhoneFrame(){return phonesVisible&&!document.hidden&&(phoneManual||phoneAutoAllowed())}
+      function refreshPhoneMotion(){
+        clearTimeout(phoneWake);
+        if(reducedMotion.matches&&phoneManual){phonePhase=phoneManual.to;phoneManual=null;renderPhoneBelt()}
+        phoneSection.dataset.phonePlaying=String(phoneAutoAllowed());
+        if(wantsPhoneFrame()){
+          if(!phoneFrame){phoneLastFrame=0;phoneFrame=requestAnimationFrame(tickPhoneBelt)}
+        }else{
+          if(phoneFrame)cancelAnimationFrame(phoneFrame);
+          phoneFrame=0;phoneLastFrame=0;planPhoneWake();
+        }
+      }
+      function tickPhoneBelt(now){
+        phoneFrame=0;
+        const dt=phoneLastFrame?Math.min(50,Math.max(0,now-phoneLastFrame)):1000/60;
+        phoneLastFrame=now;
+        if(phoneManual){
+          const t=Math.min(1,(now-phoneManual.started)/480),eased=1-Math.pow(1-t,3);
+          phonePhase=phoneManual.from+(phoneManual.to-phoneManual.from)*eased;
+          if(t>=1)phoneManual=null;
+        }else if(phoneAutoAllowed())phonePhase+=(phonesHovered?26:38)*dt/1000;
+        renderPhoneBelt();
+        if(wantsPhoneFrame())phoneFrame=requestAnimationFrame(tickPhoneBelt);
+        else{phoneLastFrame=0;planPhoneWake()}
+      }
+      function measurePhoneBelt(){
+        const ratio=phoneCycle?phoneModulo(phonePhase,phoneCycle)/phoneCycle:0;
+        const gap=parseFloat(getComputedStyle(phoneTrack).gap)||0;
+        phoneStep=originalPhones[0].getBoundingClientRect().width+gap;
+        phoneCycle=phoneStep*originalPhones.length;
+        phonePhase=ratio*phoneCycle;phoneManual=null;renderPhoneBelt();refreshPhoneMotion();
+      }
+      function movePhones(direction){
+        phoneLastInteraction=performance.now();
+        const target=(phoneManual?phoneManual.to:phonePhase)+direction*phoneStep;
+        if(reducedMotion.matches||motionPaused){phonePhase=target;phoneManual=null;renderPhoneBelt()}
+        else phoneManual={from:phonePhase,to:target,started:performance.now()};
+        refreshPhoneMotion();
       }
       document.querySelector('[data-phone-next]').addEventListener('click',()=>movePhones(1));
       document.querySelector('[data-phone-prev]').addEventListener('click',()=>movePhones(-1));
       phonePause.addEventListener('click',()=>{
         phonesPaused=!phonesPaused;
-        phonePause.setAttribute('aria-pressed',String(phonesPaused));
-        phonePause.setAttribute('aria-label',phonesPaused?'Telefon ekranlarını otomatik kaydır':'Otomatik kaydırmayı durdur');
-        phonePause.innerHTML=phonesPaused?'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 2 10 6-10 6z"/></svg>':'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h3v12H3zM10 2h3v12h-3z"/></svg>';
+        if(phonesPaused&&phoneManual){phonePhase=phoneManual.to;phoneManual=null;renderPhoneBelt()}
+        if(!phonesPaused){phoneLastInteraction=-Infinity;phoneKeyboardFocus=false;}
+        updatePhonePause();refreshPhoneMotion();
       });
-      phoneTrack.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')phonesHovered=true});
-      phoneTrack.addEventListener('pointerleave',()=>{phonesHovered=false});
-      phoneTrack.addEventListener('touchstart',()=>{lastPhoneInteraction=Date.now()},{passive:true});
-      phoneTrack.addEventListener('wheel',()=>{lastPhoneInteraction=Date.now()},{passive:true});
-      phoneTrack.addEventListener('scroll',()=>{
-        const limit=phoneTrack.scrollWidth-phoneTrack.clientWidth;
-        const progress=limit>0?phoneTrack.scrollLeft/limit:0;
-        document.querySelector('.phone-progress').style.setProperty('--phone-progress',(progress*354.5)+'%');
-      },{passive:true});
-      let phoneDrag=null;
-      phoneTrack.addEventListener('pointerdown',event=>{
-        if(event.pointerType!=='mouse'||event.button!==0)return;
-        phoneDrag={x:event.clientX,left:phoneTrack.scrollLeft};
-        phoneTrack.setPointerCapture(event.pointerId);phoneTrack.classList.add('is-dragging');lastPhoneInteraction=Date.now();
+      document.addEventListener('keydown',event=>{
+        if(['Tab','ArrowLeft','ArrowRight','Enter',' '].includes(event.key)){
+          phoneInputMode='keyboard';phoneKeyboardFocus=phoneSection.contains(document.activeElement);refreshPhoneMotion();
+        }
       });
-      phoneTrack.addEventListener('pointermove',event=>{if(phoneDrag)phoneTrack.scrollLeft=phoneDrag.left-(event.clientX-phoneDrag.x)});
-      function endPhoneDrag(){phoneDrag=null;phoneTrack.classList.remove('is-dragging');lastPhoneInteraction=Date.now()}
-      phoneTrack.addEventListener('pointerup',endPhoneDrag);phoneTrack.addEventListener('pointercancel',endPhoneDrag);
-      phoneTrack.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();movePhones(event.key==='ArrowRight'?1:-1)}});
-      setInterval(()=>{if(!phonesPaused&&!motionPaused&&!reducedMotion.matches&&!phonesHovered&&phonesVisible&&!phoneDrag&&!phoneSection.contains(document.activeElement)&&!document.hidden&&Date.now()-lastPhoneInteraction>8000)movePhones(1,false)},4500);
+      document.addEventListener('pointerdown',()=>{phoneInputMode='pointer';phoneKeyboardFocus=false;refreshPhoneMotion()},{capture:true,passive:true});
+      phoneSection.addEventListener('focusin',()=>{phoneKeyboardFocus=phoneInputMode==='keyboard';refreshPhoneMotion()});
+      phoneSection.addEventListener('focusout',()=>queueMicrotask(()=>{phoneKeyboardFocus=phoneInputMode==='keyboard'&&phoneSection.contains(document.activeElement);refreshPhoneMotion()}));
+      phoneViewport.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse')phonesHovered=true});
+      phoneViewport.addEventListener('pointerleave',()=>{phonesHovered=false});
+      phoneViewport.addEventListener('keydown',event=>{
+        if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();movePhones(event.key==='ArrowRight'?1:-1)}
+      });
+      phoneViewport.addEventListener('pointerdown',event=>{
+        if(event.pointerType==='mouse'&&event.button!==0)return;
+        phoneManual=null;phoneLastInteraction=performance.now();
+        phoneDrag={x:event.clientX,y:event.clientY,phase:phonePhase,id:event.pointerId,active:false};refreshPhoneMotion();
+        if(event.pointerType==='mouse')phoneViewport.setPointerCapture(event.pointerId);
+      });
+      phoneViewport.addEventListener('pointermove',event=>{
+        if(!phoneDrag||event.pointerId!==phoneDrag.id)return;
+        const dx=event.clientX-phoneDrag.x,dy=event.clientY-phoneDrag.y;
+        if(!phoneDrag.active&&Math.abs(dx)>6&&Math.abs(dx)>Math.abs(dy)){
+          phoneDrag.active=true;phoneViewport.classList.add('is-dragging');
+          if(!phoneViewport.hasPointerCapture(event.pointerId))phoneViewport.setPointerCapture(event.pointerId);
+        }
+        if(phoneDrag.active){event.preventDefault();phonePhase=phoneDrag.phase-dx;renderPhoneBelt()}
+      },{passive:false});
+      function finishPhoneDrag(){
+        if(!phoneDrag)return;
+        const id=phoneDrag.id;phoneDrag=null;phoneViewport.classList.remove('is-dragging');
+        if(phoneViewport.hasPointerCapture(id))phoneViewport.releasePointerCapture(id);
+        phoneLastInteraction=performance.now();refreshPhoneMotion();
+      }
+      phoneViewport.addEventListener('pointerup',finishPhoneDrag);phoneViewport.addEventListener('pointercancel',finishPhoneDrag);phoneViewport.addEventListener('lostpointercapture',finishPhoneDrag);
+      phoneViewport.addEventListener('wheel',event=>{
+        const horizontal=Math.abs(event.deltaX)>Math.abs(event.deltaY)?event.deltaX:event.shiftKey?event.deltaY:0;
+        if(!horizontal)return;
+        event.preventDefault();phoneManual=null;phoneLastInteraction=performance.now();
+        phonePhase+=horizontal*(event.deltaMode===1?16:event.deltaMode===2?phoneViewport.clientWidth:1);renderPhoneBelt();refreshPhoneMotion();
+      },{passive:false});
+      const slideObserver=new IntersectionObserver(entries=>{phonesVisible=entries[0].isIntersecting;refreshPhoneMotion()},{threshold:.1});
+      slideObserver.observe(phoneViewport);
+      const phoneResizeObserver=new ResizeObserver(measurePhoneBelt);phoneResizeObserver.observe(phoneViewport);phoneResizeObserver.observe(originalPhones[0]);
+      const phoneMotionObserver=new MutationObserver(refreshPhoneMotion);phoneMotionObserver.observe(root,{attributes:true,attributeFilter:['data-motion']});
+      reducedMotion.addEventListener('change',refreshPhoneMotion);
+      document.addEventListener('visibilitychange',()=>{if(document.hidden)finishPhoneDrag();refreshPhoneMotion()});
+      window.addEventListener('blur',finishPhoneDrag);
+      updatePhonePause();measurePhoneBelt();
 
 
       // Only the second headline line changes; assistive text stays stable.

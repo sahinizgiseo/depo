@@ -1,8 +1,8 @@
-# Asilserp — tasarım çalışması 06
+# Asilserp — tasarım çalışması 07
 
 Asilserp SEO platformu için bağımlılıksız HTML/CSS/JavaScript tasarım prototipi. İki sayfa vardır:
 
-- `index.html`: daha küçük yüzen header, değişen açılış sloganı, SEO terimleri akan Matrix arka planı, müşteri markaları, etkileşimli platform paneli, 21 araç kartı, kayan beş telefon ekranı ve tam genişlikte footer.
+- `index.html`: daha küçük yüzen header, değişen açılış sloganı, SEO terimleri akan Matrix arka planı, müşteri markaları, hareketli renk çerçeveli platform paneli, 21 araç kartı, kesintisiz kayan beş telefon ekranı ve tam genişlikte footer.
 - `trafigim-dusuyor/index.html`: dokuz adımlı trafik kaybı rehberi, kayıtlı kontrol listesi, bölüm bağlantıları ve yedi soru-cevap.
 
 İki sayfada da Asilserp markasına uyarlanmış SVG devre/çip yükleme ekranı bulunur.
@@ -28,13 +28,17 @@ Kullanıcının verdiği yeni Matrix CSS’i, raporun arkasında üç akışta 1
 
 Açılışın altındaki müşteri alanı kullanıcının birlikte çalıştığını bildirdiği dört markayı gösterir: **ShiftDelete.Net, MediaMarkt, Vestel ve Mis Amasya Tur**. MediaMarkt’ın spiral simgesi ile Vestel’in yazı logosu doğrulanmış Simple Icons dosyalarından gelir. MediaMarkt simgesinin yanında normal marka adı kullanılır. ShiftDelete.Net ve tek bir otobüs firması olan Mis Amasya Tur, güvenilir görsel dosyaları temin edilemediği için düz marka adıyla temsil edilir; bunlar hazırlanmış resmî logo gibi sunulmaz.
 
-Alan adı formu girdiyi doğrular ve açıkça etiketlenmiş örnek raporu açar. Platformun dört sekmesi, klavye okları/Home/End, 30/90 gün kontrolleri ve fırsat pencereleri çalışır. Metrik kartlarında küçük trend grafikleri bulunur; büyük grafikte fare ve klavyeyle nokta seçimi tarih/değer açıklamasını gösterir. Örnek teknik denetim kapsamı en fazla 100 sayfadır.
+Ana sayfadaki panel ve telefon önizlemelerinde alan adı etiketi **Sizin siteniz** olarak gösterilir. Alan adı formu girdiyi doğrular; geçerli bir alan adı girildiğinde açıkça etiketlenmiş örnek raporun başlığında girilen alan adı kullanılır. Platformun dört sekmesi, klavye okları/Home/End, 30/90 gün kontrolleri ve fırsat pencereleri çalışır. Metrik kartlarında küçük trend grafikleri bulunur; büyük grafikte fare ve klavyeyle nokta seçimi tarih/değer açıklamasını gösterir. Örnek teknik denetim kapsamı en fazla 100 sayfadır.
+
+Büyük platform panelinin çevresinde 2 piksel kalınlığında dönen turuncu/lacivert çerçeve ve yumuşak arka ışık bulunur. Açılıştaki örnek rapor kartı da daha ince bir hareketli çerçeve kullanır. Kartlar ve yazılar döndürülmez; renk hareketi kenarlarda kalır. Genel durdurma ve hareketi azaltma tercihleri bu efektlerde de geçerlidir.
 
 Araç kataloğu 18 SEO ve 3 Ads kartından oluşur. Beş mevcut araç doğrulanmış Asilserp kapsamına dayanır; 16 önerilen araç **Yakında** etiketi taşır. Her kart klavyeyle erişilebilir bir ayrıntı penceresi açar. Mevcut araçlar panele ve uygun örnek görünüme yönlendirir; planlanan araçlar çalışıyormuş gibi analiz başlatmaz. Kart başına dönen turuncu/lacivert conic-gradient kenar ve hafif arka ışık kullanılır; yazılar sabit kalır. Animasyonlar kart ekran dışındayken, genel hareket kontrolüyle ve hareketi azaltma tercihinde durur.
 
 SVG devre/çip yükleme ekranı, gerçek sayfa yüklenmesi ve font hazırlığını bekler. En az 550 milisaniye görünür; 1600 milisaniyelik yedek kapanış ve 200 milisaniyelik çıkış geçişi vardır. **Sayfaya geç** ve Escape ile atlanabilir. Kapanışta arka içeriğin, footer dahil, önceki `inert` durumu ve kaydırma kilidi geri yüklenir. JavaScript kapalıysa yükleyici görünmez ve sayfa içeriği erişilebilir kalır. Gösterilen yükleme durumu bir SEO analizi yürütüldüğü anlamına gelmez.
 
-Telefon ekranları HTML/CSS ve SVG ile çizilmiştir. Yatay kaydırma, dokunma, fareyle sürükleme, ok düğmeleri, klavye ve durdurma düğmesi desteklenir. Otomatik ilerleme yalnızca bölüm görünürken çalışır; kullanıcı etkileşiminde, odakta, fare üzerinde, gizli sekmede ve hareketi azaltma tercihinde durur. Ekranlar mobil web tasarım önerisidir; yayımlanmış bir mobil uygulama değildir.
+Telefon ekranları HTML/CSS ve SVG ile çizilmiştir. Beş farklı ekran, adım adım bekleyip ilerlemek yerine kesintisiz bir şerit olarak kayar. Normal hız saniyede 38 pikseldir; fare üzerindeyken 26 piksele düşer. Döngünün birleşimini gizleyen beş kopya, ekran okuyuculardan ve klavye etkileşiminden çıkarılmıştır; erişilebilir listede yalnızca beş asıl ekran bulunur.
+
+Telefon şeridinde ok düğmeleri, sağ/sol klavye tuşları, fareyle sürükleme, yatay dokunma kaydırması ve yatay tekerlek desteklenir. Durdur/oynat düğmesi fareyle kullanıldığında odağı üzerinde kalsa da hareketi yönetir. Klavyeyle odaklanıldığında, bölüm ekran dışındayken, sekme gizliyken, genel hareket durdurulduğunda veya hareketi azaltma tercihinde otomatik akış durur. JavaScript kapalıysa doğal yatay kaydırma kullanılabilir. Ekranlar mobil web tasarım önerisidir; yayımlanmış bir mobil uygulama değildir.
 
 Trafik kaybı rehberindeki kontrol listesi `asilserp-traffic-guide-v1` anahtarıyla yalnızca bu tarayıcıda saklanır; hesap senkronizasyonu yoktur. İşaretleri temizleme, ilerleme yüzdesi ve etkin bölüm göstergesi çalışır. Depolama kapalıysa sayfa içindeki işaretleme çalışmaya devam eder.
 
@@ -57,7 +61,7 @@ Tam genişlikte lacivert footer; başlangıç çağrısı, araç/platform/rehber
 
 Bütün panel ve telefon verileri örnektir. Alan adları analiz servisine gönderilmez. Gerçek API bağlantısı, kullanıcı oturumu ve canlı raporlama bu tasarım çalışmasına eklenmemiştir. Rehber otomatik teşhis veya sıralama garantisi sunmaz. Tasarım; footer dahil kullanıcı geri bildirimleriyle geliştirilir.
 
-Chromium/Playwright kontrol kapsamı: iki sayfada 320–1440 piksel arası görünüm, daralan header, değişen slogan ve hareket kontrolleri, müşteri markaları, okunabilir Matrix akışı, footer bağlantıları, tema seçimi, form, sekmeler, grafik etkileşimi, araç kartları ve ayrıntı pencereleri, yükleyicinin kapanması ve atlanması, telefon kaydırıcısı, kontrol listesi ve soru-cevaplar. Ekran görüntüleri iki kat piksel yoğunluğunda `/workspace/artifacts` altında üretilir. Son kontrol sonuçları ilgili çalıştırmanın çıktısından değerlendirilmelidir.
+Chromium/Playwright kontrol kapsamı: iki sayfada 320–1440 piksel arası görünüm, daralan header, değişen slogan ve hareket kontrolleri, müşteri markaları, okunabilir Matrix akışı, footer bağlantıları, tema seçimi, form, sekmeler, grafik etkileşimi, panel/rapor çerçeveleri, araç kartları ve ayrıntı pencereleri, yükleyicinin kapanması ve atlanması, kesintisiz telefon şeridi ve elle kontrol seçenekleri, kontrol listesi ve soru-cevaplar. Ekran görüntüleri iki kat piksel yoğunluğunda `/workspace/artifacts` altında üretilir. Son kontrol sonuçları ilgili çalıştırmanın çıktısından değerlendirilmelidir.
 
 ## Paylaşım ve önizleme
 

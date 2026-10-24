@@ -1,10 +1,10 @@
-# Asilserp — tasarım çalışması 08
+# Asilserp — tasarım çalışması 09
 
 Asilserp SEO platformu için bağımlılıksız HTML/CSS/JavaScript tasarım prototipi. Üç sayfa vardır:
 
-- `index.html`: yüzen header, değişen slogan, SEO terimleri akan Matrix, müşteri markaları, kullanım senaryoları, üç adımlı süreç, etkileşimli platform paneli, 21 araç kartı, kesintisiz telefon şeridi, örnek çalışmalar/yorumlar, paket önizlemesi, sekiz soruluk SSS ve footer.
+- `index.html`: yüzen header, değişen slogan, SEO terimleri akan Matrix, müşteri markaları, kullanım senaryoları, üç adımlı süreç, etkileşimli platform paneli, 21 araç kartı, kesintisiz telefon şeridi, örnek çalışmalar, sekmeli editoryal yorum alanı, paket önizlemesi, ek marka vitrini, sekiz soruluk SSS ve etkileşimli footer.
 - `trafigim-dusuyor/index.html`: dokuz adımlı trafik kaybı rehberi, kayıtlı kontrol listesi, bölüm bağlantıları ve yedi soru-cevap.
-- `fiyatlar/index.html`: üç paket, kapasite karşılaştırıcısı, özellik/limit tablosu, ortak araç kapsamı ve altı soru-cevap içeren yeniden tasarlanmış fiyatlar sayfası.
+- `fiyatlar/index.html`: üç paket, kapasite karşılaştırıcısı, özellik/limit tablosu, ortak araç kapsamı, altı soru-cevap ve ana sayfayla ortak etkileşimli footer.
 
 Üç sayfada da ortak marka renkleri, tema seçimi ve Asilserp’e uyarlanmış SVG devre/çip yükleme ekranı bulunur.
 
@@ -29,6 +29,8 @@ Kullanıcının verdiği yeni Matrix CSS’i, raporun arkasında üç akışta 1
 
 Açılışın altındaki müşteri alanı kullanıcının birlikte çalıştığını bildirdiği dört markayı gösterir: **ShiftDelete.Net, MediaMarkt, Vestel ve Mis Amasya Tur**. MediaMarkt’ın spiral simgesi ile Vestel’in yazı logosu doğrulanmış Simple Icons dosyalarından gelir. MediaMarkt simgesinin yanında normal marka adı kullanılır. ShiftDelete.Net ve tek bir otobüs firması olan Mis Amasya Tur, güvenilir görsel dosyaları temin edilemediği için düz marka adıyla temsil edilir; bunlar hazırlanmış resmî logo gibi sunulmaz.
 
+Ana sayfanın alt bölümündeki ek marka vitrini, kullanıcının eklenmesini istediği 10 markayı gösterir: **Migros, Aselsan, Anadolu Efes, Türk Tuborg, Opet, LC Waikiki, Mavi, Turkcell, Türkiye İş Bankası ve BİM**. Sekiz markada kaynak kaydı doğrulanmış vektör grafik kullanılır; bunların altısı sağlayıcı şirket simgeleridir, tam yazı logosu olarak sunulmaz. Türkiye İş Bankası ve BİM dosyaları yazı/marka grafikleridir. **LC Waikiki ve Opet**, güvenilir görsel dosyaları edinilemediği için normal marka adıyla temsil edilir. Bu alan müşteri puanı, yıldız, yorum sayısı veya sayısal başarı sonucu içermez; birlikte çalışma bilgisi kullanıcı beyanına dayanır.
+
 Ana sayfadaki panel ve telefon önizlemelerinde alan adı etiketi **Sizin siteniz** olarak gösterilir. Alan adı formu girdiyi doğrular; geçerli bir alan adı girildiğinde açıkça etiketlenmiş örnek raporun başlığında girilen alan adı kullanılır. Platformun dört sekmesi, klavye okları/Home/End, 30/90 gün kontrolleri ve fırsat pencereleri çalışır. Metrik kartlarında küçük trend grafikleri bulunur; büyük grafikte fare ve klavyeyle nokta seçimi tarih/değer açıklamasını gösterir. Örnek teknik denetim kapsamı en fazla 100 sayfadır.
 
 Büyük platform panelinin çevresinde 2 piksel kalınlığında dönen turuncu/lacivert çerçeve ve yumuşak arka ışık bulunur. Açılıştaki örnek rapor kartı da daha ince bir hareketli çerçeve kullanır. Kartlar ve yazılar döndürülmez; renk hareketi kenarlarda kalır. Genel durdurma ve hareketi azaltma tercihleri bu efektlerde de geçerlidir.
@@ -45,16 +47,19 @@ Trafik kaybı rehberindeki kontrol listesi `asilserp-traffic-guide-v1` anahtarı
 
 Kullanıcının sağladığı Uiverse tarzı CSS örnekleri, turuncu/lacivert ışık çerçevesi ve okunabilir SEO terimleri içeren Matrix akışı olarak uyarlanmıştır. Ana sayfadaki hareket kontrolü ve işletim sisteminin hareketi azaltma tercihi desteklenir.
 
-Tam genişlikte lacivert footer; başlangıç çağrısı, araç/platform/rehber bağlantıları, fiyat ve panel bağlantıları, örnek rapor, 2026 telif satırı ve yukarı dönme bağlantısı içerir. Araç düğmeleri mevcut katalog ayrıntı pencerelerini açar; analiz düğmesi alan adı kutusuna odaklanır. Doğrulanmamış destek adresi, sosyal hesap veya hukuki sayfa bağlantısı eklenmemiştir. Footer’ın arka planı üç temada da lacivert kalır ve sabit görünüm seçicisi için alt boşluk bırakılır.
+Ana sayfa ve fiyatlar sayfasında yeniden tasarlanan footer; büyük bir başlangıç manşeti, **Analiz / Araçlar / Paketler** sekmeli yönlendirme kartı, etkileşimli SEO haritası, araç/platform/rehber bağlantıları ve renkli ışıkla aydınlanan büyük marka yazısını birleştirir. Sekmeler tıklama, ok tuşları ve Home/End ile değişir; açıklama ve hedef bağlantı seçime göre güncellenir. SEO haritasının alan adı, sıralama, denetim ve rapor düğümleri çalışır: ana sayfada ilgili araç penceresini açar; fiyatlar sayfasında ana sayfanın araç bölümüne gider. Analiz bağlantısı ana sayfada alan adı kutusuna odaklanır; fiyatlar sayfasından ana sayfaya yönlendirir. Paket bağlantısı bulunduğu sayfaya uygun yerel hedefi kullanır.
+
+Footer’daki akış çizgileri ve marka ışığı genel durdurma ve hareketi azaltma tercihlerini destekler; yazıların kendisi döndürülmez. 2026 telif satırı ve yukarı dönme bağlantısı korunur. **Tasarım ve geliştirme: İZGİ360** ifadesi üç sayfanın da en alt footer satırında düz metin olarak yer alır; marka adına doğrulanmamış bir URL eklenmez. Destek adresi, sosyal hesap veya hukuki sayfa bağlantısı uydurulmamıştır. Footer üç temada da laciverttir ve sabit görünüm seçicisi için alt boşluk bırakır.
 
 ## Ana sayfadaki yeni bölümler
 
 - `#kullanim-senaryolari`: farklı kullanım ihtiyaçlarını üç sekmede açıklar. Eski, tekrarlayan üç platform fayda kartının yerini alır.
 - `#nasil-calisir`: alan adıyla başlama, raporları inceleme ve sonraki adımı belirleme sürecini üç adımda gösterir. Önceki kısa ilke şeridinin yerini alır; footer bağlantısından ulaşılır.
 - `#calisma-ornekleri`: üç örnek SEO çalışma senaryosu içerir. Gerçek müşterilere ait vaka sonucu veya doğrulanmış sayısal başarı verisi değildir.
-- `#yorumlar`: üç SEO odaklı örnek yorum gösterir. Her biri **Örnek yorum** olarak etiketlidir; gerçek müşteri markalarına veya kişilere atfedilmez. Gerçek yorum ve çalışma sonucu yayımlanacaksa kullanıcıdan sağlanan, doğrulanmış metinlerle değiştirilmelidir.
+- `#yorumlar`: büyük editoryal alıntı, üç konu sekmesi ve önceki/sonraki oklarıyla yeniden tasarlanmıştır. Sorgular/sayfalar, teknik öncelikler ve raporlama bakış açıları arasında elle geçiş yapılır; klavye okları ve Home/End desteklenir. Her içerik **Örnek yorum** olarak etiketlidir; gerçek müşteri markalarına veya kişilere atfedilmez. Geçiş ve işaretçi ışığı, hareket tercihlerine uyar. Gerçek yorum ve çalışma sonucu yayımlanacaksa kullanıcıdan sağlanan, doğrulanmış metinlerle değiştirilmelidir.
 - `#paketler`: gerçek başlangıç fiyatlarını ve kapasite farklarını gösteren üç kısa paket kartıdır. Ayrıntılı karşılaştırma için yerel fiyatlar sayfasına gider.
 - `#sss`: kategori filtreleriyle sekiz olgusal soru-cevap sunar.
+- `#markalar-alt`: üstteki dört müşteri markasından ayrı, 10 markalık alt vitrindir; puan veya yıldız değerlendirmesi göstermez.
 
 Üst menüde önceki “Nasıl çalışır?” düğmesi **Fiyatlar** bağlantısıyla değiştirilmiştir. Süreç bölümü ana sayfada ve footer bağlantısında korunur. Ana sayfa ve rehberdeki fiyat bağlantıları `fiyatlar/index.html` sayfasına yönelir.
 
@@ -82,14 +87,14 @@ Ortak araçlar, kapasite tablosu ve altı SSS bu koşulları açıklamak için t
 - Header davranışı kullanıcının `agent-magicui.vercel.app` referansı ve kaydırmada küçülme açıklamasına dayanır.
 - Kullanıcının verdiği [Next.js dashboard konu sayfası](https://github.com/topics/nextjs-dashboard) incelenmiştir. [TailAdmin](https://github.com/TailAdmin/free-nextjs-admin-dashboard) metrik kartları, büyüme etiketleri ve boşluk düzeni; [Kiranism/Shadcn Dashboard](https://github.com/Kiranism/next-shadcn-dashboard-starter) sade çerçeveler, koyu/açık görünüm ve grafik/tablo hiyerarşisi; [NextAdmin](https://github.com/NextAdminHQ/nextjs-admin-dashboard) dönem seçimi ve grafik değer açıklamaları için görsel ilhamdır. İlk ikisinin MIT lisansı doğrulanmıştır; NextAdmin'in lisans dosyası API üzerinden bulunamamıştır. Bu projelerden kod alınmamış; mevcut prototipe bağımlılık veya Next.js geçişi eklenmemiştir.
 - Kullanılan logo mevcut `https://asilserp.com/asilserp-logo.png` adresinden alınmıştır: `assets/asilserp-logo-official.png`. Önceki fotoğraf uyarlaması `assets/asilserp-logo.png` olarak korunur, artık gösterilmez.
-- Müşteri markalarının dosyaları ve kaynak kayıtları `assets/clients/` altındadır. `sources.json`, MediaMarkt/Vestel Simple Icons kaynaklarını, dosya özetlerini ve diğer iki markadaki metin kullanımının nedenini kaydeder. Birlikte çalışma bilgisi kullanıcının beyanına dayanır.
+- Üst müşteri markalarının dosyaları ve kaynak kayıtları `assets/clients/` altındadır. `sources.json`, MediaMarkt/Vestel Simple Icons kaynaklarını, dosya özetlerini ve diğer iki markadaki metin kullanımının nedenini kaydeder. Alt vitrinin grafikleri `assets/clients-lower/` altında tutulur; kaynak kayıtları sağlayıcı simgesi/yazı logosu ayrımını, kaynak adreslerini, dosya özetlerini ve LC Waikiki/Opet metin kullanımını belirtir. Altı sağlayıcı simgesi, TradingView BIST şirket eşlemesini kaydeden herkese açık Fundhunter arşivinden; Türkiye İş Bankası Wikimedia kaynak kaydı bulunan bir SVG arşivinden; BİM ise Simple Icons kaynağından edinilmiştir. Birlikte çalışma bilgisi kullanıcının beyanına dayanır.
 - Fontlar: Manrope Variable, Latin ve Latin-ext. Font dosyaları ve SIL Open Font License metni `assets/fonts/` altındadır. Türkçe karakterler desteklenir.
 
 ## Kapsam ve doğrulama
 
 Bütün panel ve telefon verileri örnektir. Alan adları analiz servisine gönderilmez. Gerçek API bağlantısı, kullanıcı oturumu ve canlı raporlama bu tasarım çalışmasına eklenmemiştir. Rehber otomatik teşhis veya sıralama garantisi sunmaz. Tasarım; footer dahil kullanıcı geri bildirimleriyle geliştirilir.
 
-Chromium/Playwright kontrol kapsamı: üç sayfada 320–1440 piksel arası görünüm, daralan header, değişen slogan ve hareket kontrolleri, müşteri markaları, okunabilir Matrix akışı, footer bağlantıları, tema seçimi, form, sekmeler, grafik etkileşimi, panel/rapor çerçeveleri, araç kartları ve ayrıntı pencereleri, yükleyicinin kapanması ve atlanması, kesintisiz telefon şeridi ve elle kontrol seçenekleri, kullanım senaryosu sekmeleri, örnek çalışma/yorum etiketleri, paket kartları, fiyatlar kapasite karşılaştırıcısı ve limit tablosu, kategori filtreli SSS, rehber kontrol listesi ve soru-cevaplar. Ekran görüntüleri iki kat piksel yoğunluğunda `/workspace/artifacts` altında üretilir. Son kontrol sonuçları ilgili çalıştırmanın çıktısından değerlendirilmelidir.
+Chromium/Playwright kontrol kapsamı: üç sayfada 320–1440 piksel arası görünüm, daralan header, değişen slogan ve hareket kontrolleri, üst/alt müşteri markaları ve puansız gösterim, okunabilir Matrix akışı, footer sekmeleri/bağlantıları ve son İZGİ360 satırı, tema seçimi, form, sekmeler, grafik etkileşimi, panel/rapor çerçeveleri, araç kartları ve ayrıntı pencereleri, yükleyicinin kapanması ve atlanması, kesintisiz telefon şeridi ve elle kontrol seçenekleri, kullanım senaryosu sekmeleri, örnek çalışma etiketleri, editoryal yorum sekmeleri/okları ve örnek yorum etiketleri, paket kartları, fiyatlar kapasite karşılaştırıcısı ve limit tablosu, kategori filtreli SSS, rehber kontrol listesi ve soru-cevaplar. Ekran görüntüleri iki kat piksel yoğunluğunda `/workspace/artifacts` altında üretilir. Son kontrol sonuçları ilgili çalıştırmanın çıktısından değerlendirilmelidir.
 
 ## Paylaşım ve önizleme
 

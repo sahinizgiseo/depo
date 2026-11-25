@@ -1,0 +1,218 @@
+{
+  "name": "İZGİ360 · Site SEO kontrolü",
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Istanbul",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false
+  },
+  "nodes": [
+    {
+      "id": "7aa93448-f0a3-40b4-b657-000000000001",
+      "name": "Çalıştır",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "7aa93448-f0a3-40b4-b657-000000000002",
+      "name": "SEO ayarları",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return [{json:{\n  \"mode\": \"pilot\",\n  \"urls\": [\n    \"https://vdcdis.com.tr/\",\n    \"https://edklinik.com/\",\n    \"https://www.egedentantalya.com/\"\n  ],\n  \"maxPerRun\": 5\n}}];"
+      }
+    },
+    {
+      "id": "7aa93448-f0a3-40b4-b657-000000000003",
+      "name": "Site listesi",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return (function prepareSeo(settings) {\n  const urls = [...new Set((Array.isArray(settings.urls)?settings.urls:[])\n    .map(url=>String(url||'').trim()).filter(url=>/^https?:\\/\\/[^\\s]+$/i.test(url)))];\n  const max = Math.max(1,Math.min(10,Number(settings.maxPerRun)||5));\n  return urls.slice(0,max).map(url=>({json:{url,mode:settings.mode}}));\n})($input.first().json);"
+      }
+    },
+    {
+      "id": "7aa93448-f0a3-40b4-b657-000000000004",
+      "name": "Canlı SEO mu",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.mode }}",
+              "rightValue": "live",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "7aa93448-f0a3-40b4-b657-000000000005",
+      "name": "Google SEO denetimi",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        0
+      ],
+      "parameters": {
+        "url": "https://www.googleapis.com/pagespeedonline/v5/runPagespeed",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "category",
+              "value": "seo"
+            },
+            {
+              "name": "strategy",
+              "value": "mobile"
+            },
+            {
+              "name": "locale",
+              "value": "tr"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 90000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1000
+            }
+          }
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "7aa93448-f0a3-40b4-b657-000000000006",
+      "name": "SEO sonuçları",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return (function scoreSeo(responses, inputUrl) {\n  return responses.map((item,i)=>{\n    const body=item.json.body||item.json;\n    const lighthouse=body.lighthouseResult;\n    const category=lighthouse?.categories?.seo;\n    const numeric=category?.score;\n    const url=inputUrl(i);\n    if(!(typeof numeric==='number'&&numeric>=0&&numeric<=1)) {\n      return {json:{url,seoScore:null,seoStatus:body.error || body.message?'Google ölçümü başarısız':'Ölçüm yapılmadı',source:'Google PageSpeed Insights · Lighthouse · mobil'}};\n    }\n    const findings=(category.auditRefs||[]).filter(ref=>ref.weight>0).map(ref=>lighthouse.audits?.[ref.id])\n      .filter(a=>a&&typeof a.score==='number'&&a.score<1).slice(0,5).map(a=>({id:a.id,title:a.title,score:a.score}));\n    return {json:{url,finalUrl:lighthouse.finalDisplayedUrl||lighthouse.finalUrl||url,seoScore:Math.round(numeric*100),seoStatus:'Ölçüldü',\n      source:'Google PageSpeed Insights · Lighthouse · mobil',measuredAt:lighthouse.fetchTime||null,findings}};\n  });\n})($input.all(), i => $('Site listesi').itemMatching(i).json.url);"
+      }
+    },
+    {
+      "id": "7aa93448-f0a3-40b4-b657-000000000007",
+      "name": "SEO önizleme",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        180
+      ],
+      "parameters": {
+        "jsCode": "return $input.all().map(item=>({json:{url:item.json.url,seoScore:null,seoStatus:'Ölçüm yapılmadı. Canlı denetim bekliyor.'}}));"
+      }
+    }
+  ],
+  "connections": {
+    "Çalıştır": {
+      "main": [
+        [
+          {
+            "node": "SEO ayarları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEO ayarları": {
+      "main": [
+        [
+          {
+            "node": "Site listesi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Site listesi": {
+      "main": [
+        [
+          {
+            "node": "Canlı SEO mu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Canlı SEO mu": {
+      "main": [
+        [
+          {
+            "node": "Google SEO denetimi",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SEO önizleme",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google SEO denetimi": {
+      "main": [
+        [
+          {
+            "node": "SEO sonuçları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

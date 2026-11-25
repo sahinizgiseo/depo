@@ -1,0 +1,292 @@
+{
+  "name": "İZGİ360 · Antalya sağlık harita taraması",
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Istanbul",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false
+  },
+  "nodes": [
+    {
+      "name": "Testi çalıştır",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {},
+      "id": "3bae69c1-f0a3-40b4-b657-000000000001"
+    },
+    {
+      "name": "Panel web adresi",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        190
+      ],
+      "parameters": {
+        "path": "izgi360-antalya-saglik",
+        "authentication": "basicAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "disabled": true,
+      "id": "3bae69c1-f0a3-40b4-b657-000000000002"
+    },
+    {
+      "name": "Ayarlar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const settings = {\n  \"mode\": \"pilot\",\n  \"city\": \"Antalya\",\n  \"district\": \"Muratpaşa\",\n  \"categories\": [\n    {\n      \"label\": \"Diş klinikleri\",\n      \"query\": \"diş kliniği\"\n    },\n    {\n      \"label\": \"Saç ekimi\",\n      \"query\": \"saç ekim kliniği\"\n    },\n    {\n      \"label\": \"Estetik doktorları\",\n      \"query\": \"plastik rekonstrüktif ve estetik cerrahi uzmanı\"\n    },\n    {\n      \"label\": \"Burun estetiği\",\n      \"query\": \"rinoplasti burun estetiği kliniği\"\n    },\n    {\n      \"label\": \"Annelik estetiği\",\n      \"query\": \"annelik estetiği mommy makeover plastik cerrahi\"\n    },\n    {\n      \"label\": \"Dermatoloji\",\n      \"query\": \"dermatoloji cildiye kliniği\"\n    },\n    {\n      \"label\": \"Göz sağlığı\",\n      \"query\": \"göz hastalıkları göz kliniği\"\n    },\n    {\n      \"label\": \"Fizik tedavi\",\n      \"query\": \"fizik tedavi ve rehabilitasyon kliniği\"\n    },\n    {\n      \"label\": \"Diğer sağlık alanları\",\n      \"query\": \"özel sağlık kliniği\"\n    }\n  ],\n  \"category\": \"Diş klinikleri\",\n  \"districts\": [\n    \"Muratpaşa\",\n    \"Konyaaltı\",\n    \"Kepez\",\n    \"Aksu\",\n    \"Döşemealtı\",\n    \"Alanya\",\n    \"Manavgat\",\n    \"Serik\",\n    \"Kemer\",\n    \"Kumluca\",\n    \"Finike\",\n    \"Demre\",\n    \"Kaş\",\n    \"Korkuteli\",\n    \"Elmalı\",\n    \"Gazipaşa\",\n    \"Akseki\",\n    \"Gündoğmuş\",\n    \"İbradı\"\n  ],\n  \"customQuery\": \"\",\n  \"mapsEmbedKey\": \"\"\n};\nreturn [{json:(function settingsForRun(settings) {\n  const match = settings.categories.find(c => c.label === settings.category);\n  const query = String(settings.customQuery || match?.query || '').trim();\n  if (!query || !settings.districts.includes(settings.district)) throw new Error('Ayarlar düğümünde bir sağlık kategorisi ve geçerli Antalya ilçesi seçin.');\n  if (!['pilot','places'].includes(settings.mode)) throw new Error('mode değeri pilot veya places olmalı.');\n  return {...settings,query};\n})(settings)}];"
+      },
+      "id": "3bae69c1-f0a3-40b4-b657-000000000003"
+    },
+    {
+      "name": "Places modu",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.mode }}",
+              "rightValue": "places",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "3bae69c1-f0a3-40b4-b657-000000000004"
+    },
+    {
+      "name": "Antalya örnek kayıtları",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        140
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg=$input.first().json;\nconst dental=settings=>(function previewBatch(config, samples) {\n  const results = samples.filter(row => row[0] === config.district).map(([,name,address,source,websiteFinding,officialMap,mapType]) => ({\n    name, address, source, websiteFinding, traffic:'Ölçülemedi',\n    mapUrl:officialMap || 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name + ' ' + address),\n    mapType:mapType || 'Adresle haritada ara',\n    draft:name === 'Özel VDC' ? 'Merhaba VDC ekibi, sitenizde randevu formunun WhatsApp’ta hazır bir mesaj açtığını gördüm. Form doldurma sayısıyla gelen randevu taleplerini karşılaştırmaya yönelik kısa bir ölçüm önerim var. 15 dakikalık bir görüşme için uygun olduğunuz bir zaman var mı?' : '',\n  }));\n  const index = config.districts.indexOf(config.district);\n  return { mode:'pilot', city:config.city, district:config.district, nextDistrict:index < 0 ? null : config.districts[index+1] || null, results };\n})(settings,[[\"Muratpaşa\",\"Özel VDC\",\"Bahçelievler Mah. Piri Reis Cd. No:18A, Muratpaşa/Antalya\",\"https://vdcdis.com.tr/iletisim/\",\"Randevu formu, gönderilecek mesajı WhatsApp’ta açıyor.\",\"https://www.google.com/maps/dir/?api=1&destination=36.886992%2C30.68307\",\"Kliniğin yayımladığı yol tarifi\"],[\"Muratpaşa\",\"ED Klinik\",\"Yeşilbahçe Mah. Metin Kasapoğlu Cd. Beytaş Sitesi A Blok No:2/3, Muratpaşa/Antalya\",\"https://edklinik.com/iletisim\",\"İletişim sayfasında telefon, WhatsApp ve randevu bağlantısı var.\",\"https://maps.google.com/?cid=9321649780581538669\",\"Kliniğin yayımladığı harita kaydı\"],[\"Muratpaşa\",\"Egedent Antalya\",\"Meydankavağı Mah. İsmail Cem Cad. No:43/A, Muratpaşa/Antalya\",\"https://www.egedentantalya.com/iletisim/\",\"İletişim sayfasında randevu talep formu var.\"],[\"Konyaaltı\",\"Dentology\",\"Pınarbaşı Mah. Pınarbaşı Cad. No:8/A, Konyaaltı/Antalya\",\"https://dentologyantalya.com/iletisim/\",\"İletişim sayfası online saat seçimi ve form seçenekleri sunuyor.\",\"https://maps.app.goo.gl/QQg1R3BpzQjAjPHg7\",\"Kliniğin yayımladığı harita kaydı\"],[\"Kepez\",\"Ahenk Diş\",\"Yeni Doğan Mah. Şht. Uz. Çvş. Ali Yılmaz Cd. No:57/A, Kepez/Antalya\",\"https://www.ahenkdis.com/iletisim/\",\"İletişim sayfası telefonla randevu bağlantısı sunuyor.\"]]);\nreturn [{json:(function demoData(cfg, dentalPreview, extra) {\n  const base = cfg.category === 'Diş klinikleri' && !cfg.customQuery ?\n    dentalPreview(cfg).results.map(row=>({...row,website:row.source.match(/^https?:\\/\\/[^/]+/)?.[0]+'/'})) : [];\n  if (cfg.district === 'Muratpaşa' && !cfg.customQuery) {\n    for (const row of extra.filter(row=>row.categories.includes(cfg.category))) {\n      base.push({name:row.name,address:row.address,source:row.source,website:row.website,websiteFinding:row.finding,\n        traffic:'Ölçülemedi',mapUrl:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(row.name+' '+row.address),mapType:'Adresle haritada ara'});\n    }\n  }\n  return {mode:'pilot',city:cfg.city,district:cfg.district,results:base};\n})(cfg,dental,[{\"categories\":[\"Saç ekimi\"],\"name\":\"BT Hair Clinic Antalya\",\"address\":\"Kışla Mah., Güllük Cd., Selekler Çarşısı No:2/110, Muratpaşa/Antalya\",\"website\":\"https://bthairclinicantalya.com/\",\"source\":\"https://bthairclinicantalya.com/iletisim/\",\"finding\":\"İşletmenin iletişim sayfasında Antalya adresi ve saç ekimi hizmeti yer alıyor.\"},{\"categories\":[\"Estetik doktorları\",\"Burun estetiği\"],\"name\":\"Op. Dr. Harun Şimşek\",\"address\":\"Fener Mah., Tekelioğlu Cd., Kayıkent Sitesi B Blok No:33/A, Muratpaşa/Antalya\",\"website\":\"https://harunsimsek.com.tr/\",\"source\":\"https://harunsimsek.com.tr/tr/iletisim\",\"finding\":\"Hekimin iletişim sayfasında Muratpaşa adresi ve burun estetiği çalışma alanı yer alıyor.\"},{\"categories\":[\"Estetik doktorları\",\"Burun estetiği\",\"Annelik estetiği\"],\"name\":\"Op. Dr. Mustafa Keleş\",\"address\":\"Tarım Mah., Perge Bulvarı, Muratpaşa/Antalya\",\"website\":\"https://www.drmustafakeles.com/\",\"source\":\"https://www.drmustafakeles.com/\",\"finding\":\"Hekimin web sitesinde burun ve annelik estetiği için ayrı hizmet sayfaları var.\"}])}];"
+      },
+      "id": "3bae69c1-f0a3-40b4-b657-000000000005"
+    },
+    {
+      "name": "Google Places",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        -140
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://places.googleapis.com/v1/places:searchText",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Goog-FieldMask",
+              "value": "places.id,places.displayName,places.formattedAddress,places.addressComponents,places.googleMapsUri,places.websiteUri,places.businessStatus,nextPageToken"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { textQuery: [$json.query, $json.district, $json.city].join(' '), pageSize: 20, regionCode: 'TR', languageCode: 'tr' } }}",
+        "options": {
+          "timeout": 15000,
+          "pagination": {
+            "pagination": {
+              "paginationMode": "updateAParameterInEachRequest",
+              "parameters": {
+                "parameters": [
+                  {
+                    "type": "body",
+                    "name": "pageToken",
+                    "value": "={{ $response.body?.nextPageToken || '' }}"
+                  }
+                ]
+              },
+              "paginationCompleteWhen": "other",
+              "completeExpression": "={{ !$response.body?.nextPageToken }}",
+              "limitPagesFetched": true,
+              "maxRequests": 3,
+              "requestInterval": 250
+            }
+          }
+        }
+      },
+      "disabled": true,
+      "id": "3bae69c1-f0a3-40b4-b657-000000000006"
+    },
+    {
+      "name": "İlçeyi doğrula",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        -140
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{json:(function placesBatch(config, pages) {\n  const fold = s => String(s || '').toLocaleLowerCase('tr-TR').normalize('NFD').replace(/\\p{M}/gu, '').replaceAll('ı','i');\n  const district = fold(config.district);\n  const province = fold(config.city);\n  const seen = new Set();\n  const results = [];\n  for (const item of pages) {\n    const page = item.json.body || item.json;\n    for (const place of page.places || []) {\n      const tokens = fold(place.formattedAddress).split(/[^a-z0-9]+/);\n      const components = (place.addressComponents || []).map(c => fold(c.longText));\n      const name = place.displayName?.text;\n      if (!name || !place.id || seen.has(place.id) ||\n        (place.businessStatus && place.businessStatus !== 'OPERATIONAL') ||\n        (!tokens.includes(district) && !components.includes(district)) ||\n        (!tokens.includes(province) && !components.includes(province))) continue;\n      seen.add(place.id);\n      results.push({\n        name, address:place.formattedAddress || '', placeId:place.id,\n        mapUrl:place.googleMapsUri || 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name) + '&query_place_id=' + encodeURIComponent(place.id),\n        mapType:'Google Haritalar işletme kaydı',\n        source:place.websiteUri || '',\n        websiteFinding:place.websiteUri ? 'Haritalar kaydında web sitesi bağlantısı var.' : 'Bu Haritalar kaydında web sitesi bağlantısı bulunamadı.',\n        traffic:'Ölçülemedi',\n      });\n    }\n  }\n  const last = pages.at(-1)?.json;\n  const index = config.districts.indexOf(config.district);\n  return { mode:'places', city:config.city, district:config.district, nextDistrict:index < 0 ? null : config.districts[index+1] || null, morePages:Boolean((last?.body || last)?.nextPageToken), results };\n})( $('Ayarlar').first().json,$input.all())}];"
+      },
+      "id": "3bae69c1-f0a3-40b4-b657-000000000007"
+    },
+    {
+      "name": "İşletme kartları",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg=$('Ayarlar').first().json;\nconst report=(function report(batch,cfg) {\n  const websiteLink = result => {\n    const candidate = result.website || (batch.mode === 'places' ? result.source : '');\n    return /^https?:\\/\\/[^\\s]+$/i.test(candidate || '') ? candidate : null;\n  };\n  const thirdParty = link => /(^|\\.)(facebook\\.com|instagram\\.com|wa\\.me|whatsapp\\.com|linktr\\.ee|doktorsitesi\\.com|doktortakvimi\\.com)$/i.test(link?.match(/^https?:\\/\\/([^/?:#]+)/i)?.[1] || '');\n  const records = batch.results.map(result=>{\n    const link = websiteLink(result);\n    const externalProfile = thirdParty(link) ? link : null;\n    const website = externalProfile ? null : link;\n    const status = batch.mode === 'places'\n      ? website ? 'Haritalar kaydında site bağlantısı var' : externalProfile ? 'Haritalar kaydında profil veya rehber bağlantısı var' : 'Haritalar kaydında site bağlantısı yok'\n      : 'Web sitesi işletmenin kendi sayfasından doğrulandı';\n    return {...result, website, externalProfile, websiteStatus:status,seoScore:null,seoStatus:website?'SEO kontrolü bekliyor':'Site adresi bekleniyor'};\n  });\n  const siteCandidates = records.filter(r=>r.website);\n  const externalProfiles = records.filter(r=>r.externalProfile);\n  const noWebsiteOnMaps = batch.mode === 'places' ? records.filter(r=>!r.website&&!r.externalProfile) : [];\n  return {...batch,category:cfg.category,query:cfg.query,results:records,counts:{total:records.length,withoutMapsWebsite:noWebsiteOnMaps.length,withWebsite:siteCandidates.length},\n    noWebsiteOnMaps, externalProfiles, siteCandidates:siteCandidates.map(r=>({business:r.name,url:r.website,address:r.address,mapUrl:r.mapUrl})),\n    seoUrls:[...new Set(siteCandidates.map(r=>r.website))],\n  };\n})($input.first().json,cfg);\nreturn [{json:{...report,html:(function render(report,key) {\n  const esc = (s) => String(s ?? '').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'})[c]);\n  const link = (url,label) => /^https?:\\/\\/[^\\s]+$/i.test(url||'') ? '<a href=\"'+esc(url)+'\" target=\"_blank\" rel=\"noopener noreferrer\">'+esc(label)+'</a>' : '';\n  const section = (title,records) => '<section><h2>'+esc(title)+'</h2>'+ (records.length ? records.map((r,i)=>{\n    const query = r.placeId ? 'place_id:'+r.placeId : r.name+' '+r.address;\n    const map = key && /^[A-Za-z0-9_-]+$/.test(key) ?\n      '<iframe title=\"'+esc(r.name)+' haritası\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\" src=\"https://www.google.com/maps/embed/v1/place?key='+encodeURIComponent(key)+'&amp;q='+encodeURIComponent(query)+'\"></iframe>' : '';\n    return '<details '+(i===0?'open':'')+'><summary>'+esc(r.name)+'</summary><p>'+esc(r.address)+'</p><p>'+\n      link(r.mapUrl,r.mapType)+' '+link(r.website,'Siteyi aç')+' '+link(r.source,'Kaynak')+'</p>'+map+'<p>'+\n      esc(r.websiteStatus)+'</p>'+(r.draft?'<p><strong>Teklif taslağı</strong></p><p>'+esc(r.draft)+'</p>':'')+'</details>';\n  }).join(''):'<p>Bu grupta kayıt görünmüyor.</p>')+'</section>';\n  const title=report.city+' · '+report.district+' · '+report.category;\n  const note=report.mode==='pilot'?'Önizleme · İşletmelerin kendi sayfalarından hazırlanmış örnekler.':'Kaynak · Google Maps';\n  return '<!doctype html><html lang=\"tr\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>'+esc(title)+\n    '</title><style>body{font:16px/1.5 system-ui;color:#173329;background:#f4f7f3;max-width:960px;margin:28px auto;padding:0 16px}section{margin-block:24px}details{background:white;border:1px solid #c9d9ce;border-radius:10px;padding:16px;margin:10px 0}summary{font-weight:650;cursor:pointer}a{color:#176047;margin-right:12px}iframe{width:100%;height:320px;border:0}</style><h1>'+\n    esc(title)+'</h1><p>'+esc(note)+'</p>'+\n    (report.mode==='places'?section('Haritalar kaydında site bağlantısı yok',report.noWebsiteOnMaps):'')+\n    (report.externalProfiles.length?section('Profil veya rehber bağlantıları',report.externalProfiles):'')+\n    section('SEO kontrolüne uygun site adresleri',report.results.filter(r=>r.website))+'</html>';\n})(report,cfg.mapsEmbedKey)}}];"
+      },
+      "id": "3bae69c1-f0a3-40b4-b657-000000000008"
+    },
+    {
+      "name": "Paneli döndür",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1320,
+        0
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "disabled": true,
+      "id": "3bae69c1-f0a3-40b4-b657-000000000009"
+    }
+  ],
+  "connections": {
+    "Testi çalıştır": {
+      "main": [
+        [
+          {
+            "node": "Ayarlar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Panel web adresi": {
+      "main": [
+        [
+          {
+            "node": "Ayarlar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ayarlar": {
+      "main": [
+        [
+          {
+            "node": "Places modu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Places modu": {
+      "main": [
+        [
+          {
+            "node": "Google Places",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Antalya örnek kayıtları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Places": {
+      "main": [
+        [
+          {
+            "node": "İlçeyi doğrula",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "İlçeyi doğrula": {
+      "main": [
+        [
+          {
+            "node": "İşletme kartları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Antalya örnek kayıtları": {
+      "main": [
+        [
+          {
+            "node": "İşletme kartları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "İşletme kartları": {
+      "main": [
+        [
+          {
+            "node": "Paneli döndür",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
